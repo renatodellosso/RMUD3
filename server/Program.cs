@@ -1,29 +1,54 @@
 using Microsoft.Extensions.FileProviders;
 
-var builder = WebApplication.CreateBuilder();
+namespace RMUD3.server;
 
-builder.Services.AddControllers();
-builder.Services.AddSignalR();
-
-var app = builder.Build();
-
-var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "client", "public"));
-app.UseDefaultFiles(new DefaultFilesOptions()
+public class Program
 {
-	FileProvider = fileProvider
-});
-app.UseStaticFiles(new StaticFileOptions()
-{
-	FileProvider = fileProvider
-});
 
+	private static WebApplication? app;
 
-app.UseHttpsRedirection();
+	public static void Main(string[] args)
+	{
+		ConfigureApp();
 
-app.UseAuthorization();
+		if (app is null)
+		{
+			Console.Error.WriteLine("Failed to configure app!");
+			Environment.Exit(1);
+		}
 
-app.MapControllers();
+		Services.Create(app);
 
-app.MapHub<TestHub>("/testhub");
+		app.Run();
+	}
 
-app.Run();
+	private static void ConfigureApp()
+	{
+		var builder = WebApplication.CreateBuilder();
+
+		builder.Services.AddControllers();
+		builder.Services.AddSignalR();
+		builder.Services.AddSingleton<ISessionManagerService, SessionManagerService>();
+
+		app = builder.Build();
+
+		var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "client", "public"));
+		app.UseDefaultFiles(new DefaultFilesOptions()
+		{
+			FileProvider = fileProvider
+		});
+		app.UseStaticFiles(new StaticFileOptions()
+		{
+			FileProvider = fileProvider
+		});
+
+		app.UseHttpsRedirection();
+
+		app.UseAuthorization();
+
+		app.MapControllers();
+
+		app.MapHub<MiddlewareHub>("/hub");
+	}
+
+}
