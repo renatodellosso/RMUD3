@@ -1,5 +1,5 @@
 ﻿import * as signalR from "@microsoft/signalr";
-import { MainPageClientAction } from "./transpiled/RMUD3.Server.clientactiondicts";
+import { MainPageClientAction } from "./transpiled/RMUD3.Server.ServerComponents";
 
 console.log("Starting client...");
 
@@ -19,12 +19,9 @@ connection.start().then(() => {
 
     window.onbeforeunload = () => true;
 
-    //send("Ping", "Hello world");
-    //send("Ping", ["a", "b"]);
-    //send("Ping", { a: 1, b: 2 });
-    send(MainPageClientAction.MainPage, "Hello world");
+    send([], MainPageClientAction.MainPage, "Hello world");
 }).catch(err => console.error(err.toString()));
 
-function send(action: number, args: any) {
-    connection.invoke("Send", action, args).catch(err => console.error(err.toString()));
+function send(componentPath: string[], action: number, args: any) {
+    connection.invoke("Send", componentPath, action, args).catch(err => console.error(err.toString()));
 }

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-/** Transpiled from RMUD3.Server.clientactiondicts.MainPageClientAction */
+/** Transpiled from RMUD3.Server.ServerComponents.MainPageClientAction */
 export enum MainPageClientAction {
     MainPage = 0,
 }

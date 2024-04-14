@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using RMUD3.Server.clientactiondicts;
+using RMUD3.Server.ServerComponents;
 using RMUD3.Server.SignalR;
 using System.Text.Json;
 
@@ -14,18 +14,11 @@ namespace RMUD3.Server
 
 		private IMiddlewareHubClient Client => hubContext.Clients.User(userId);
 
-		private ClientActionDict actionDict = new MainPageClientActionDict();
+		private ServerComponent page = new MainPageServerComponent();
 
-		public async Task HandleClientAction(int actionId, JsonElement args)
+		public async Task HandleClientAction(string[] componentPath, int actionId, JsonElement args)
 		{
-			actionDict.TryGetValue(actionId, out var action);
-
-			if (action is null)
-				throw new Exception($"No action found for id: {actionId}.");
-
-			action(args);
-
-			await Client.Send(actionId, args);
+			await page.HandleClientAction(new Queue<string>(componentPath), actionId, args);
 		}
 
 	}
