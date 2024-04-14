@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
 
-namespace RMUD3.server
+namespace RMUD3.Server
 {
 	public interface ISessionManagerService
 	{

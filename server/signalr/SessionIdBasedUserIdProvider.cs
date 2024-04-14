@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 
-namespace RMUD3.server
+namespace RMUD3.Server.SignalR
 {
 	public class SessionIdBasedUserIdProvider(ISessionManagerService sessionManager) : IUserIdProvider
 	{

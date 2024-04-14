@@ -1,27 +1,31 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using RMUD3.server.signalr;
+using RMUD3.Server.clientactiondicts;
+using RMUD3.Server.SignalR;
+using System.Text.Json;
 
-namespace RMUD3.server
+namespace RMUD3.Server
 {
-	public class Session
+	public class Session(string userId)
 	{
 
-		private readonly string userId;
+		private readonly string userId = userId;
 
-		private IHubContext<MiddlewareHub, IMiddlewareHubClient> hubContext;
+		private IHubContext<MiddlewareHub, IMiddlewareHubClient> hubContext = Services.GetHubContext();
 
 		private IMiddlewareHubClient Client => hubContext.Clients.User(userId);
 
-		public Session(string userId)
-		{
-			hubContext = Services.GetHubContext();
+		private ClientActionDict actionDict = new MainPageClientActionDict();
 
-			this.userId = userId;
-		}
-
-		public async Task HandleClientAction(string action, object args)
+		public async Task HandleClientAction(int actionId, JsonElement args)
 		{
-			await Client.Receive(action, args);
+			actionDict.TryGetValue(actionId, out var action);
+
+			if (action is null)
+				throw new Exception($"No action found for id: {actionId}.");
+
+			action(args);
+
+			await Client.Send(actionId, args);
 		}
 
 	}

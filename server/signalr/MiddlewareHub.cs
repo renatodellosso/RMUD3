@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.Text.Json;
 
-namespace RMUD3.server.signalr
+namespace RMUD3.Server.SignalR
 {
 	public interface IMiddlewareHubClient
 	{
-		Task Receive(string action, object args);
+		Task Send(int action, object args);
 	}
 
 	public class MiddlewareHub : Hub<IMiddlewareHubClient>
 	{
-		public async Task Send(string action, object args, ISessionManagerService sessionManager)
+		public async Task Send(int action, JsonElement args, ISessionManagerService sessionManager)
 		{
+			Console.WriteLine($"Received client action: {action}. Args: {args}");
 			await sessionManager.GetSession(Context).HandleClientAction(action, args);
 		}
 

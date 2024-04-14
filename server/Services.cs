@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using RMUD3.server.signalr;
+using RMUD3.Server.SignalR;
 
-namespace RMUD3.server
+namespace RMUD3.Server
 {
     public class Services
 	{
