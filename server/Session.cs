@@ -1,22 +1,27 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
+using RMUD3.server.signalr;
 
 namespace RMUD3.server
 {
 	public class Session
 	{
 
-		private ClaimsPrincipal claims;
+		private readonly string userId;
 
 		private IHubContext<MiddlewareHub, IMiddlewareHubClient> hubContext;
 
-		private IMiddlewareHubClient Client => hubContext.Clients.User;
+		private IMiddlewareHubClient Client => hubContext.Clients.User(userId);
 
-		public Session(ClaimsPrincipal claims)
+		public Session(string userId)
 		{
-			this.claims = claims;
-
 			hubContext = Services.GetHubContext();
+
+			this.userId = userId;
+		}
+
+		public async Task HandleClientAction(string action, object args)
+		{
+			await Client.Receive(action, args);
 		}
 
 	}

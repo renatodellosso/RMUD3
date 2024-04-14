@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.FileProviders;
+using RMUD3.server.signalr;
 
 namespace RMUD3.server;
 
@@ -26,9 +28,7 @@ public class Program
 	{
 		var builder = WebApplication.CreateBuilder();
 
-		builder.Services.AddControllers();
-		builder.Services.AddSignalR();
-		builder.Services.AddSingleton<ISessionManagerService, SessionManagerService>();
+		AddServices(builder);
 
 		app = builder.Build();
 
@@ -49,6 +49,14 @@ public class Program
 		app.MapControllers();
 
 		app.MapHub<MiddlewareHub>("/hub");
+	}
+
+	private static void AddServices(WebApplicationBuilder builder)
+	{
+		builder.Services.AddControllers();
+		builder.Services.AddSignalR();
+		builder.Services.AddSingleton<ISessionManagerService, SessionManagerService>();
+		builder.Services.AddSingleton<IUserIdProvider, SessionIdBasedUserIdProvider>();
 	}
 
 }

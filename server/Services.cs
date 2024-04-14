@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using RMUD3.server.signalr;
 
 namespace RMUD3.server
 {
-	public class Services
+    public class Services
 	{
 
 		private static Services instance;

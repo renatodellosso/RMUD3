@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
-using System.Security.Claims;
 
 namespace RMUD3.server
 {
 	public interface ISessionManagerService
 	{
-		void CreateSession(ClaimsPrincipal user);
+		void CreateSession(string userId);
+		public Session GetSession(HubCallerContext ctx);
+
 	}
 
 	public class SessionManagerService : ISessionManagerService
@@ -14,25 +15,20 @@ namespace RMUD3.server
 
 		private readonly ConcurrentDictionary<string, Session> sessions = new();
 
-		private readonly IHubContext<MiddlewareHub, IMiddlewareHubClient> hubContext;
-
-		public SessionManagerService(IHubContext<MiddlewareHub, IMiddlewareHubClient> hubContext)
+		public void CreateSession(string userId)
 		{
-			Console.WriteLine("SessionManagerService created");
-
-			this.hubContext = hubContext;
+			sessions.TryAdd(userId, new(userId));
 		}
 
-		public void CreateSession(ClaimsPrincipal user)
+		public Session GetSession(HubCallerContext ctx)
 		{
-			Session session = new(user);
+			if (ctx.UserIdentifier is null)
+				throw new ArgumentNullException("ctx.UserIdentifier");
 
-			string guid = Guid.NewGuid().ToString();
-			user.AddIdentity(new ClaimsIdentity(claims: [new(ClaimTypes.NameIdentifier, guid)]));
+			if (!sessions.TryGetValue(ctx.UserIdentifier, out Session? session))
+				throw new Exception($"Session not found for user {ctx.UserIdentifier}");
 
-			Console.WriteLine($"Creating session with guid {user.GetSessionId()}");
-
-			sessions.TryAdd(guid, session);
+			return session;
 		}
 	}
 }
