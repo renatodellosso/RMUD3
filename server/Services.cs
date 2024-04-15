@@ -3,7 +3,7 @@ using RMUD3.Server.SignalR;
 
 namespace RMUD3.Server
 {
-    public class Services
+	public class Services
 	{
 
 		private static Services instance;

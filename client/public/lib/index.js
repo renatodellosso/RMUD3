@@ -14,9 +14,6 @@ connection.onclose(function () {
 connection.start().then(function () {
     console.log("Connection started");
     window.onbeforeunload = function () { return true; };
-    //send("Ping", "Hello world");
-    //send("Ping", ["a", "b"]);
-    //send("Ping", { a: 1, b: 2 });
     send([], RMUD3_Server_ServerComponents_1.MainPageClientAction.MainPage, "Hello world");
 }).catch(function (err) { return console.error(err.toString()); });
 function send(componentPath, action, args) {

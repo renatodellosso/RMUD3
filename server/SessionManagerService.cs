@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 
 namespace RMUD3.Server
 {
 	public interface ISessionManagerService
 	{
 		void CreateSession(string userId);
-		public Session GetSession(HubCallerContext ctx);
-
+		public Session GetSession(string? userId);
 	}
 
 	public class SessionManagerService : ISessionManagerService
@@ -17,16 +15,16 @@ namespace RMUD3.Server
 
 		public void CreateSession(string userId)
 		{
-			sessions.TryAdd(userId, new(userId));
+			sessions.TryAdd(userId, new(new ClientCommunicationManager(userId), new ComponentManager()));
 		}
 
-		public Session GetSession(HubCallerContext ctx)
+		public Session GetSession(string? userId)
 		{
-			if (ctx.UserIdentifier is null)
+			if (userId is null)
 				throw new ArgumentNullException("ctx.UserIdentifier");
 
-			if (!sessions.TryGetValue(ctx.UserIdentifier, out Session? session))
-				throw new Exception($"Session not found for user {ctx.UserIdentifier}");
+			if (!sessions.TryGetValue(userId, out Session? session))
+				throw new Exception($"Session not found for user {userId}");
 
 			return session;
 		}

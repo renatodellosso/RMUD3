@@ -2,13 +2,16 @@
 
 namespace RMUD3.Server
 {
-	public class ServerComponent(string id)
+	public class ServerComponent(string id, Session session, ServerComponent? parent = null)
 	{
 
 		public string Id { get; init; } = id;
 
+		private readonly Session session = session;
+
 		private readonly Dictionary<int, Func<JsonElement, Task>> actionHandlers = [];
 
+		private readonly ServerComponent? parent = parent;
 		private readonly Dictionary<string, ServerComponent> children = [];
 
 		protected void AddActionHandler<TKey, TArgs>(TKey key, Func<TArgs, Task> action) where TKey : Enum

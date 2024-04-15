@@ -11,7 +11,7 @@ namespace RMUD3.Server.ServerComponents
 
 	public class MainPageServerComponent : ServerComponent
 	{
-		public MainPageServerComponent() : base("MainPage")
+		public MainPageServerComponent(Session session) : base("MainPage", session)
 		{
 			AddActionHandler(MainPageClientAction.MainPage, (string args) =>
 			{
