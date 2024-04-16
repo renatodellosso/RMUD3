@@ -5,20 +5,25 @@ namespace RMUD3.Server.SignalR
 {
 	public interface IMiddlewareHubClient
 	{
-		Task Send(string[] componentPath, int action, object args);
+		Task Action(string[] componentPath, int action, object? args = null);
+
+		Task EnableComponent(string[] componentPath, string componentType, object? componentData = null);
+		Task DisableComponent(string[] componentPath);
 	}
 
-	public class MiddlewareHub : Hub<IMiddlewareHubClient>
+	public class MiddlewareHub(ISessionManagerService sessionManager) : Hub<IMiddlewareHubClient>
 	{
-		public async Task Send(string[] componentPath, int action, JsonElement args, ISessionManagerService sessionManager)
+		public async Task Action(string[] componentPath, int action, JsonElement? args = null)
 		{
-			Console.WriteLine($"Received client action: {action}. Args: {args}");
-			await sessionManager.GetSession(Context.UserIdentifier).ComponentManager.HandleClientAction(componentPath, action, args);
+			Session session = sessionManager.GetSession(Context.UserIdentifier);
+			if (session != null && session.ComponentManager != null)
+				await session.ComponentManager.HandleClientAction(componentPath, action, args);
 		}
 
 		public override Task OnConnectedAsync()
 		{
 			Console.WriteLine("Client connected!");
+			sessionManager.CreateSession(Context.UserIdentifier);
 			return Task.CompletedTask;
 		}
 	}

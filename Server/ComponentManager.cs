@@ -3,26 +3,11 @@
 namespace RMUD3.Server
 {
 
-	public interface IComponentManager
+	public class ComponentManager
 	{
 
-		ISession? Session { get; set; }
-
-		/// <summary>
-		/// Handle a client action.
-		/// </summary>
-		/// <param name="componentPath">A list of child component IDs. A value of [] executes an action on <see cref="page"/></param>
-		/// <param name="actionId">The numerical ID of the action to execute. Don't enter a number! Use a transpiled enum.</param>
-		/// <param name="args">JSON to parse into arguments for the action</param>
-		/// <returns></returns>
-		Task HandleClientAction(string[] componentPath, int action, JsonElement args);
-	}
-
-	public class ComponentManager : IComponentManager
-	{
-
-		private ISession? session;
-		public ISession? Session
+		private Session? session;
+		public Session? Session
 		{
 			get => session;
 			set
@@ -33,9 +18,28 @@ namespace RMUD3.Server
 			}
 		}
 
-		public Task HandleClientAction(string[] componentPath, int action, JsonElement args)
+		private Component? root;
+
+		/// <summary>
+		/// Automatically disables the old root and enables the new root, to ensure the client always has a page loaded.
+		/// </summary>
+		public Component? Root
 		{
-			throw new NotImplementedException();
+			get => root;
+			set
+			{
+				root?.Disable();
+				root = value;
+				root?.Enable();
+			}
+		}
+
+		public Task HandleClientAction(string[] componentPath, int action, JsonElement? args)
+		{
+			if (root is null)
+				throw new InvalidOperationException("Root component not set");
+
+			return root.HandleClientAction(new Queue<string>(componentPath), action, args);
 		}
 	}
 }

@@ -3,14 +3,14 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: "./client/lib/index.ts",
+    entry: ["./client/public/main.css", "./client/lib/index.ts"],
     output: {
         path: path.resolve(__dirname, "client", "public", "dist"),
         filename: "[name].js",
         publicPath: "/",
     },
     resolve: {
-        extensions: [".js", ".ts"],
+        extensions: [".js", ".ts", ".css"],
     },
     module: {
         rules: [
@@ -20,7 +20,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader"],
+                use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
             },
         ],
     },
@@ -30,7 +30,7 @@ module.exports = {
         //    template: "./client/public/index.html",
         //}),
         new MiniCssExtractPlugin({
-            filename: "css/[name].[chunkhash].css",
+            filename: "[name].css",
         }),
     ],
 };

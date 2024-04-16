@@ -5,7 +5,7 @@ namespace Testing.Tests
 	[TestClass]
 	public class ComponentManagerTests
 	{
-		private IComponentManager? componentManager;
+		private ComponentManager? componentManager;
 
 		[TestInitialize]
 		public void Initialize()

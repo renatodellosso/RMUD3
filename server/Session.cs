@@ -1,23 +1,22 @@
-﻿namespace RMUD3.Server
+﻿using RMUD3.Server.Components;
+
+namespace RMUD3.Server
 {
-
-	public interface ISession
+	public class Session
 	{
 
-	}
+		public ClientCommunicationManager? ClientCommunicationHandler { get; }
+		public ComponentManager? ComponentManager { get; }
 
-
-	public class Session : ISession
-	{
-
-		private readonly IClientCommunicationManager clientCommunicationHandler;
-		public IComponentManager ComponentManager { get; }
-
-		public Session(IClientCommunicationManager clientCommunicationHandler, IComponentManager componentManager)
+		public Session(ClientCommunicationManager? clientCommunicationHandler, ComponentManager? componentManager)
 		{
-			this.clientCommunicationHandler = clientCommunicationHandler;
+			ClientCommunicationHandler = clientCommunicationHandler;
 			ComponentManager = componentManager;
-			ComponentManager.Session = this;
+			if (ComponentManager != null)
+			{
+				ComponentManager.Session = this;
+				ComponentManager.Root = new MainPageComponent(this);
+			}
 		}
 	}
 }

@@ -11,7 +11,23 @@ namespace Testing.Tests
 		[TestInitialize]
 		public void Initialize()
 		{
+			Services.Create(null);
 			sessionManagerService = new SessionManagerService();
+		}
+
+		[TestMethod]
+		public void CreateSession_ValidUserId_Success()
+		{
+			sessionManagerService!.CreateSession("test");
+			var session = sessionManagerService.GetSession("test");
+			Assert.IsNotNull(session);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CreateSession_NullUserId_Exception()
+		{
+			sessionManagerService!.CreateSession(null);
 		}
 
 		[TestMethod]

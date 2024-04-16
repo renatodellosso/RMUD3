@@ -306,6 +306,61 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./client/public/main.css":
+/*!********************************!*\
+  !*** ./client/public/main.css ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/public/main.css?");
+
+/***/ }),
+
+/***/ "./client/lib/Component.ts":
+/*!*********************************!*\
+  !*** ./client/lib/Component.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nvar Component = /** @class */ (function () {\n    function Component(connectionManager, id, parent) {\n        this.children = new Map();\n        this.connection = connectionManager;\n        this.id = id;\n        this.parent = parent;\n        this.children = new Map();\n    }\n    Component.prototype.getPath = function () {\n        if (this.parent) {\n            return this.parent.getPath().concat([this.id]);\n        }\n        return [];\n    };\n    Component.prototype.send = function (action, args) {\n        this.connection.send(this.getPath(), action, args);\n    };\n    Component.prototype.enable = function (args) {\n    };\n    Component.prototype.disable = function () {\n    };\n    Component.prototype.action = function (action, args) {\n    };\n    return Component;\n}());\nexports[\"default\"] = Component;\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/Component.ts?");
+
+/***/ }),
+
+/***/ "./client/lib/ComponentManager.ts":
+/*!****************************************!*\
+  !*** ./client/lib/ComponentManager.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nvar MainPageComponent_1 = __webpack_require__(/*! ./Components/MainPageComponent */ \"./client/lib/Components/MainPageComponent.ts\");\nvar ComponentManager = /** @class */ (function () {\n    function ComponentManager() {\n        this.componentMap = {\n            MainPageComponent: function (connectionManager, id, parent) { return new MainPageComponent_1.default(connectionManager, id, parent); }\n        };\n        this.rootComponent = null;\n    }\n    ComponentManager.prototype.enableComponent = function (connectionManager, path, type, args) {\n        var _a, _b;\n        console.log(\"Enabling component \".concat(path, \" of type \").concat(type));\n        if (path.length > 0) {\n            var parent_1 = this.rootComponent;\n            for (var i = 0; i < path.length - 1; i++) {\n                parent_1 = parent_1 === null || parent_1 === void 0 ? void 0 : parent_1.children[path[i]];\n            }\n            var id = path[path.length - 1];\n            (_a = parent_1.children[id]) === null || _a === void 0 ? void 0 : _a.disable();\n            parent_1.children[id] = this.componentMap[type](connectionManager, id, parent_1, args);\n            parent_1.children[id].enable(args);\n            return;\n        }\n        console.log(\"Root component is being changed!\");\n        this.rootComponent = this.componentMap[type](connectionManager, \"root\", undefined, args);\n        (_b = this.rootComponent) === null || _b === void 0 ? void 0 : _b.disable();\n        this.rootComponent = this.componentMap[type](connectionManager, \"root\", undefined, args);\n        this.rootComponent.enable(args);\n    };\n    ComponentManager.prototype.disableComponent = function (path) {\n        console.log(\"Disabling component \".concat(path.join(\"/\")));\n    };\n    ComponentManager.prototype.action = function (path, action, args) {\n        // Get the component\n        var component = this.rootComponent;\n        for (var i = 0; i < path.length; i++) {\n            component = component === null || component === void 0 ? void 0 : component.children[path[i]];\n        }\n        if (!component) {\n            console.error(\"Component \".concat(path.join(\"/\"), \" not found\"));\n            return;\n        }\n        // Call the action\n        component.action(action, args);\n    };\n    return ComponentManager;\n}());\nexports[\"default\"] = ComponentManager;\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/ComponentManager.ts?");
+
+/***/ }),
+
+/***/ "./client/lib/Components/MainPageComponent.ts":
+/*!****************************************************!*\
+  !*** ./client/lib/Components/MainPageComponent.ts ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __extends = (this && this.__extends) || (function () {\n    var extendStatics = function (d, b) {\n        extendStatics = Object.setPrototypeOf ||\n            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\n            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };\n        return extendStatics(d, b);\n    };\n    return function (d, b) {\n        if (typeof b !== \"function\" && b !== null)\n            throw new TypeError(\"Class extends value \" + String(b) + \" is not a constructor or null\");\n        extendStatics(d, b);\n        function __() { this.constructor = d; }\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n    };\n})();\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nvar Component_1 = __webpack_require__(/*! ../Component */ \"./client/lib/Component.ts\");\nvar RMUD3_Server_Components_1 = __webpack_require__(/*! ../transpiled/RMUD3.Server.Components */ \"./client/lib/transpiled/RMUD3.Server.Components.ts\");\nvar MainPageComponent = /** @class */ (function (_super) {\n    __extends(MainPageComponent, _super);\n    function MainPageComponent() {\n        return _super !== null && _super.apply(this, arguments) || this;\n    }\n    MainPageComponent.prototype.enable = function (args) {\n        var _this = this;\n        console.log(\"Main page enabled\");\n        var div = document.createElement(\"div\");\n        document.getElementsByTagName(\"body\")[0].appendChild(div);\n        // Title\n        var title = document.createElement(\"h1\");\n        title.innerHTML = \"RMUD3\";\n        div.appendChild(title);\n        // Create sign in form\n        var signInForm = document.createElement(\"form\");\n        div.appendChild(signInForm);\n        var usernameInput = document.createElement(\"input\");\n        usernameInput.type = \"text\";\n        usernameInput.placeholder = \"Username\";\n        signInForm.appendChild(usernameInput);\n        var passwordInput = document.createElement(\"input\");\n        passwordInput.type = \"password\";\n        passwordInput.placeholder = \"Password\";\n        signInForm.appendChild(passwordInput);\n        var signInErrorLabel = document.createElement(\"label\");\n        signInErrorLabel.style.color = \"red\";\n        var signInButton = document.createElement(\"button\");\n        signInButton.innerHTML = \"Sign In\";\n        signInButton.onclick = function () {\n            _this.send(RMUD3_Server_Components_1.MainPageClientAction.SignIn, {\n                username: usernameInput.value,\n                password: passwordInput.value\n            });\n        };\n        signInForm.appendChild(signInButton);\n        signInForm.appendChild(signInErrorLabel);\n        // Create create account form\n        var createAccountForm = document.createElement(\"form\");\n        div.appendChild(createAccountForm);\n        var newUsernameInput = document.createElement(\"input\");\n        newUsernameInput.type = \"text\";\n        newUsernameInput.placeholder = \"Username\";\n        createAccountForm.appendChild(newUsernameInput);\n        var newPasswordInput = document.createElement(\"input\");\n        newPasswordInput.type = \"password\";\n        newPasswordInput.placeholder = \"Password\";\n        createAccountForm.appendChild(newPasswordInput);\n        var confirmPasswordInput = document.createElement(\"input\");\n        confirmPasswordInput.type = \"password\";\n        confirmPasswordInput.placeholder = \"Confirm Password\";\n        createAccountForm.appendChild(confirmPasswordInput);\n        var createAccountErrorLabel = document.createElement(\"label\");\n        createAccountErrorLabel.style.color = \"red\";\n        var createAccountButton = document.createElement(\"button\");\n        createAccountButton.innerHTML = \"Create Account\";\n        createAccountButton.onclick = function () {\n            if (newPasswordInput.value !== confirmPasswordInput.value) {\n                console.error(\"Passwords do not match\");\n                return;\n            }\n            _this.send(RMUD3_Server_Components_1.MainPageClientAction.CreateAccount, {\n                username: newUsernameInput.value,\n                password: newPasswordInput.value,\n                confirmPassword: confirmPasswordInput.value\n            });\n        };\n        createAccountForm.appendChild(createAccountButton);\n        createAccountForm.appendChild(createAccountErrorLabel);\n    };\n    MainPageComponent.prototype.action = function (action, args) {\n        switch (action) {\n            default:\n                console.error(\"Unknown action:\", action);\n        }\n    };\n    return MainPageComponent;\n}(Component_1.default));\nexports[\"default\"] = MainPageComponent;\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/Components/MainPageComponent.ts?");
+
+/***/ }),
+
+/***/ "./client/lib/ConnectionManager.ts":
+/*!*****************************************!*\
+  !*** ./client/lib/ConnectionManager.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nvar signalR = __webpack_require__(/*! @microsoft/signalr */ \"./node_modules/@microsoft/signalr/dist/esm/index.js\");\nvar ConnectionManager = /** @class */ (function () {\n    function ConnectionManager(componentManager) {\n        var _this = this;\n        this.componentManager = componentManager;\n        this.connection = new signalR.HubConnectionBuilder().withUrl(\"/hub\").build();\n        this.connection.on(\"Action\", function (path, action, args) {\n            console.log(\"Received action \".concat(action, \" for component:\"), path, \"Args:\", args);\n            _this.componentManager.action(path, action, args);\n        });\n        this.connection.on(\"EnableComponent\", function (path, type, args) { return _this.componentManager.enableComponent(_this, path, type, args); });\n        this.connection.on(\"DisableComponent\", function (path) { return _this.componentManager.disableComponent(path); });\n        this.connection.onclose(function () {\n            console.log(\"Connection closed\");\n            window.onbeforeunload = null;\n        });\n    }\n    ConnectionManager.prototype.start = function () {\n        this.connection.start().then(function () {\n            console.log(\"Connection started\");\n            window.onbeforeunload = function () { return true; };\n        }).catch(function (err) { return console.error(err.toString()); });\n    };\n    ConnectionManager.prototype.send = function (componentPath, action, args) {\n        this.connection.invoke(\"Action\", componentPath, action, args).catch(function (err) { return console.error(err.toString()); });\n    };\n    return ConnectionManager;\n}());\nexports[\"default\"] = ConnectionManager;\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/ConnectionManager.ts?");
+
+/***/ }),
+
 /***/ "./client/lib/index.ts":
 /*!*****************************!*\
   !*** ./client/lib/index.ts ***!
@@ -313,18 +368,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nvar signalR = __webpack_require__(/*! @microsoft/signalr */ \"./node_modules/@microsoft/signalr/dist/esm/index.js\");\nvar RMUD3_Server_ServerComponents_1 = __webpack_require__(/*! ./transpiled/RMUD3.Server.ServerComponents */ \"./client/lib/transpiled/RMUD3.Server.ServerComponents.ts\");\nconsole.log(\"Starting client...\");\nvar connection = new signalR.HubConnectionBuilder().withUrl(\"/hub\").build();\nconnection.on(\"Send\", function (user, message) {\n    console.log(\"Received message: \".concat(message, \" from \").concat(user));\n});\nconnection.onclose(function () {\n    console.log(\"Connection closed\");\n    window.onbeforeunload = null;\n});\nconnection.start().then(function () {\n    console.log(\"Connection started\");\n    window.onbeforeunload = function () { return true; };\n    send([], RMUD3_Server_ServerComponents_1.MainPageClientAction.MainPage, \"Hello world\");\n}).catch(function (err) { return console.error(err.toString()); });\nfunction send(componentPath, action, args) {\n    connection.invoke(\"Send\", componentPath, action, args).catch(function (err) { return console.error(err.toString()); });\n}\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/index.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nvar ComponentManager_1 = __webpack_require__(/*! ./ComponentManager */ \"./client/lib/ComponentManager.ts\");\nvar ConnectionManager_1 = __webpack_require__(/*! ./ConnectionManager */ \"./client/lib/ConnectionManager.ts\");\nconsole.log(\"Starting client...\");\nvar componentManager = new ComponentManager_1.default();\nvar connectionManager = new ConnectionManager_1.default(componentManager);\nconnectionManager.start();\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/index.ts?");
 
 /***/ }),
 
-/***/ "./client/lib/transpiled/RMUD3.Server.ServerComponents.ts":
-/*!****************************************************************!*\
-  !*** ./client/lib/transpiled/RMUD3.Server.ServerComponents.ts ***!
-  \****************************************************************/
+/***/ "./client/lib/transpiled/RMUD3.Server.Components.ts":
+/*!**********************************************************!*\
+  !*** ./client/lib/transpiled/RMUD3.Server.Components.ts ***!
+  \**********************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
-eval("\n/* THIS (.ts) FILE IS GENERATED BY Tapper */\n/* eslint-disable */\n/* tslint:disable */\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.MainPageClientAction = void 0;\n/** Transpiled from RMUD3.Server.ServerComponents.MainPageClientAction */\nvar MainPageClientAction;\n(function (MainPageClientAction) {\n    MainPageClientAction[MainPageClientAction[\"MainPage\"] = 0] = \"MainPage\";\n})(MainPageClientAction || (exports.MainPageClientAction = MainPageClientAction = {}));\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/transpiled/RMUD3.Server.ServerComponents.ts?");
+eval("\n/* THIS (.ts) FILE IS GENERATED BY Tapper */\n/* eslint-disable */\n/* tslint:disable */\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.MainPageServerAction = exports.MainPageClientAction = void 0;\n/** Transpiled from RMUD3.Server.Components.MainPageClientAction */\nvar MainPageClientAction;\n(function (MainPageClientAction) {\n    MainPageClientAction[MainPageClientAction[\"SignIn\"] = 0] = \"SignIn\";\n    MainPageClientAction[MainPageClientAction[\"CreateAccount\"] = 1] = \"CreateAccount\";\n})(MainPageClientAction || (exports.MainPageClientAction = MainPageClientAction = {}));\n/** Transpiled from RMUD3.Server.Components.MainPageServerAction */\nvar MainPageServerAction;\n(function (MainPageServerAction) {\n})(MainPageServerAction || (exports.MainPageServerAction = MainPageServerAction = {}));\n\n\n//# sourceURL=webpack://rmud3prototyping/./client/lib/transpiled/RMUD3.Server.Components.ts?");
 
 /***/ }),
 
@@ -408,7 +463,7 @@ eval("/* (ignored) */\n\n//# sourceURL=webpack://rmud3prototyping/ws_(ignored)?"
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -460,6 +515,7 @@ eval("/* (ignored) */\n\n//# sourceURL=webpack://rmud3prototyping/ws_(ignored)?"
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	__webpack_require__("./client/public/main.css");
 /******/ 	var __webpack_exports__ = __webpack_require__("./client/lib/index.ts");
 /******/ 	
 /******/ })()

@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace RMUD3.Server.SignalR
 {
-	public class SessionIdBasedUserIdProvider(ISessionManagerService sessionManager) : IUserIdProvider
+	public class SessionIdBasedUserIdProvider : IUserIdProvider
 	{
 		public string GetUserId(HubConnectionContext connection)
 		{
@@ -13,7 +13,6 @@ namespace RMUD3.Server.SignalR
 			{
 				userId = Guid.NewGuid().ToString();
 				connection.User.AddIdentity(new ClaimsIdentity(claims: [new(ClaimTypes.NameIdentifier, userId)]));
-				sessionManager.CreateSession(userId);
 			}
 
 			return userId;
