@@ -10,5 +10,7 @@ export enum MainPageClientAction {
 
 /** Transpiled from RMUD3.Server.Components.MainPageServerAction */
 export enum MainPageServerAction {
+    SignInError = 0,
+    CreateAccountError = 1,
 }
 

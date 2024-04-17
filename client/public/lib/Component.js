@@ -17,10 +17,6 @@ var Component = /** @class */ (function () {
     Component.prototype.send = function (action, args) {
         this.connection.send(this.getPath(), action, args);
     };
-    Component.prototype.enable = function (args) {
-    };
-    Component.prototype.disable = function () {
-    };
     Component.prototype.action = function (action, args) {
     };
     return Component;

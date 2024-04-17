@@ -25,15 +25,26 @@ var MainPageComponent = /** @class */ (function (_super) {
     MainPageComponent.prototype.enable = function (args) {
         var _this = this;
         console.log("Main page enabled");
-        var div = document.createElement("div");
-        document.getElementsByTagName("body")[0].appendChild(div);
+        var page = document.createElement("div");
+        page.id = this.id;
+        page.className = "w-full h-screen flex flex-col justify-center items-center";
+        document.getElementsByTagName("body")[0].appendChild(page);
+        var centerDiv = document.createElement("div");
+        centerDiv.className = "w-1/4";
+        page.appendChild(centerDiv);
         // Title
         var title = document.createElement("h1");
         title.innerHTML = "RMUD3";
-        div.appendChild(title);
+        title.className = "w-full text-center mb-4";
+        centerDiv.appendChild(title);
+        // Side by side forms
+        var forms = document.createElement("div");
+        forms.className = "flex justify-between";
+        centerDiv.appendChild(forms);
         // Create sign in form
         var signInForm = document.createElement("form");
-        div.appendChild(signInForm);
+        signInForm.className = "flex flex-col";
+        forms.appendChild(signInForm);
         var usernameInput = document.createElement("input");
         usernameInput.type = "text";
         usernameInput.placeholder = "Username";
@@ -44,6 +55,7 @@ var MainPageComponent = /** @class */ (function (_super) {
         signInForm.appendChild(passwordInput);
         var signInErrorLabel = document.createElement("label");
         signInErrorLabel.style.color = "red";
+        signInErrorLabel.id = "signInErrorLabel";
         var signInButton = document.createElement("button");
         signInButton.innerHTML = "Sign In";
         signInButton.onclick = function () {
@@ -56,7 +68,8 @@ var MainPageComponent = /** @class */ (function (_super) {
         signInForm.appendChild(signInErrorLabel);
         // Create create account form
         var createAccountForm = document.createElement("form");
-        div.appendChild(createAccountForm);
+        createAccountForm.className = "flex flex-col";
+        forms.appendChild(createAccountForm);
         var newUsernameInput = document.createElement("input");
         newUsernameInput.type = "text";
         newUsernameInput.placeholder = "Username";
@@ -71,6 +84,7 @@ var MainPageComponent = /** @class */ (function (_super) {
         createAccountForm.appendChild(confirmPasswordInput);
         var createAccountErrorLabel = document.createElement("label");
         createAccountErrorLabel.style.color = "red";
+        createAccountErrorLabel.id = "createAccountErrorLabel";
         var createAccountButton = document.createElement("button");
         createAccountButton.innerHTML = "Create Account";
         createAccountButton.onclick = function () {
@@ -87,8 +101,17 @@ var MainPageComponent = /** @class */ (function (_super) {
         createAccountForm.appendChild(createAccountButton);
         createAccountForm.appendChild(createAccountErrorLabel);
     };
+    MainPageComponent.prototype.disable = function () {
+        document.getElementById(this.id).remove();
+    };
     MainPageComponent.prototype.action = function (action, args) {
         switch (action) {
+            case RMUD3_Server_Components_1.MainPageServerAction.SignInError:
+                document.getElementById("signInErrorLabel").innerHTML = args.error;
+                break;
+            case RMUD3_Server_Components_1.MainPageServerAction.CreateAccountError:
+                document.getElementById("createAccountErrorLabel").innerHTML = args.error;
+                break;
             default:
                 console.error("Unknown action:", action);
         }

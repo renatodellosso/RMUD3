@@ -23,7 +23,6 @@ var ComponentManager = /** @class */ (function () {
             return;
         }
         console.log("Root component is being changed!");
-        this.rootComponent = this.componentMap[type](connectionManager, "root", undefined, args);
         (_b = this.rootComponent) === null || _b === void 0 ? void 0 : _b.disable();
         this.rootComponent = this.componentMap[type](connectionManager, "root", undefined, args);
         this.rootComponent.enable(args);

@@ -13,5 +13,7 @@ var MainPageClientAction;
 /** Transpiled from RMUD3.Server.Components.MainPageServerAction */
 var MainPageServerAction;
 (function (MainPageServerAction) {
+    MainPageServerAction[MainPageServerAction["SignInError"] = 0] = "SignInError";
+    MainPageServerAction[MainPageServerAction["CreateAccountError"] = 1] = "CreateAccountError";
 })(MainPageServerAction || (exports.MainPageServerAction = MainPageServerAction = {}));
 //# sourceMappingURL=RMUD3.Server.Components.js.map

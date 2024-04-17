@@ -5,9 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "webpack-build-dev": "webpack --mode=development",
+    "dev": "webpack --mode=development",
     "watch": "webpack --mode=development --watch",
-    "webpack-build-release": "webpack --mode=production"
+    "release": "webpack --mode=production"
   },
   "keywords": [],
   "author": "",

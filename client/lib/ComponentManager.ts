@@ -27,7 +27,6 @@ export default class ComponentManager {
 
         console.log("Root component is being changed!");
 
-        this.rootComponent = this.componentMap[type](connectionManager, "root", undefined, args);
         this.rootComponent?.disable();
         this.rootComponent = this.componentMap[type](connectionManager, "root", undefined, args);
         this.rootComponent.enable(args);

@@ -1,6 +1,6 @@
 ﻿import ConnectionManager from "./ConnectionManager";
 
-export default class Component {
+export default abstract class Component {
 
     private connection: ConnectionManager;
 
@@ -27,13 +27,9 @@ export default class Component {
         this.connection.send(this.getPath(), action, args);
     }
 
-    enable(args?: any) {
+    abstract enable(args?: any): void;
 
-    }
-
-    disable() {
-
-    }
+    abstract disable(): void;
 
     action(action: number, args?: any) {
 

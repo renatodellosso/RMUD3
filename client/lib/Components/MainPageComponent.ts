@@ -5,17 +5,30 @@ export default class MainPageComponent extends Component {
     enable(args?: any) {
         console.log("Main page enabled");
 
-        const div = document.createElement("div");
-        document.getElementsByTagName("body")[0].appendChild(div);
+        const page = document.createElement("div");
+        page.id = this.id;
+        page.className = "w-full h-screen flex flex-col justify-center items-center";
+        document.getElementsByTagName("body")[0].appendChild(page);
+
+        const centerDiv = document.createElement("div");
+        centerDiv.className = "w-1/4";
+        page.appendChild(centerDiv);
 
         // Title
         const title = document.createElement("h1");
         title.innerHTML = "RMUD3";
-        div.appendChild(title);
+        title.className = "w-full text-center mb-4";
+        centerDiv.appendChild(title);
+
+        // Side by side forms
+        const forms = document.createElement("div");
+        forms.className = "flex justify-between";
+        centerDiv.appendChild(forms);
 
         // Create sign in form
         const signInForm = document.createElement("form");
-        div.appendChild(signInForm);
+        signInForm.className = "flex flex-col";
+        forms.appendChild(signInForm);
 
         const usernameInput = document.createElement("input");
         usernameInput.type = "text";
@@ -29,10 +42,13 @@ export default class MainPageComponent extends Component {
 
         const signInErrorLabel = document.createElement("label");
         signInErrorLabel.style.color = "red";
+        signInErrorLabel.id = "signInErrorLabel";
 
         const signInButton = document.createElement("button");
         signInButton.innerHTML = "Sign In";
-        signInButton.onclick = () => {
+        signInButton.onclick = (e) => {
+            e.preventDefault();
+
             this.send(MainPageClientAction.SignIn, {
                 username: usernameInput.value,
                 password: passwordInput.value
@@ -44,7 +60,8 @@ export default class MainPageComponent extends Component {
 
         // Create create account form
         const createAccountForm = document.createElement("form");
-        div.appendChild(createAccountForm);
+        createAccountForm.className = "flex flex-col";
+        forms.appendChild(createAccountForm);
 
         const newUsernameInput = document.createElement("input");
         newUsernameInput.type = "text";
@@ -63,10 +80,14 @@ export default class MainPageComponent extends Component {
 
         const createAccountErrorLabel = document.createElement("label");
         createAccountErrorLabel.style.color = "red";
+        createAccountErrorLabel.style.height = "8px";
+        createAccountErrorLabel.id = "createAccountErrorLabel";
 
         const createAccountButton = document.createElement("button");
         createAccountButton.innerHTML = "Create Account";
-        createAccountButton.onclick = () => {
+        createAccountButton.onclick = (e) => {
+            e.preventDefault();
+
             if (newPasswordInput.value !== confirmPasswordInput.value) {
                 console.error("Passwords do not match");
                 return;
@@ -83,8 +104,18 @@ export default class MainPageComponent extends Component {
         createAccountForm.appendChild(createAccountErrorLabel);
     }
 
+    disable() {
+        document.getElementById(this.id).remove();
+    }
+
     action(action: number, args?: any) {
         switch (action) {
+            case MainPageServerAction.SignInError:
+                document.getElementById("signInErrorLabel").innerHTML = args;
+                break;
+            case MainPageServerAction.CreateAccountError:
+                document.getElementById("createAccountErrorLabel").innerHTML = args;
+                break;
             default:
                 console.error("Unknown action:", action);
         }

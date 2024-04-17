@@ -13,7 +13,8 @@ namespace RMUD3.Server.Components
 	[TranspilationSource]
 	public enum MainPageServerAction
 	{
-
+		SignInError,
+		CreateAccountError,
 	}
 
 	public class MainPageComponent : Component
@@ -22,7 +23,8 @@ namespace RMUD3.Server.Components
 		{
 			ActionHandler = new()
 			{
-
+				{ MainPageClientAction.SignIn, ActionHandler.Wrap(() => ExecuteAction(MainPageServerAction.SignInError, "Test error")) },
+				{ MainPageClientAction.CreateAccount, ActionHandler.Wrap(() => ExecuteAction(MainPageServerAction.CreateAccountError, "Test error")) },
 			};
 		}
 	}

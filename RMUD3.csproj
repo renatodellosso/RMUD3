@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="tapper --project RMUD3.csproj --output client/lib/transpiled&#xD;&#xA;npm run webpack-build-dev" />
+    <Exec Command="tapper --project RMUD3.csproj --output client/lib/transpiled&#xD;&#xA;npm run dev" />
   </Target>
 
 </Project>
