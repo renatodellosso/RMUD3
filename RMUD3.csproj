@@ -15,10 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EnvDotNet" Version="1.0.2" />
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.0" />
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.4.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MongoDB.EntityFrameworkCore" Version="7.0.0-preview.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Tapper" Version="1.11.0" />
     <PackageReference Include="Tapper.Analyzer" Version="1.11.0">

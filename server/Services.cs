@@ -36,5 +36,10 @@ namespace RMUD3.Server
 			return GetService<IHubContext<MiddlewareHub, IMiddlewareHubClient>>();
 		}
 
+		public static IEnvService? GetEnv()
+		{
+			return GetService<IEnvService>();
+		}
+
 	}
 }

@@ -1,5 +1,6 @@
 ﻿import Component from "../Component";
 import { MainPageClientAction, MainPageServerAction } from "../transpiled/RMUD3.Server.Components";
+import { sha256 } from "../utils";
 
 export default class MainPageComponent extends Component {
     enable(args?: any) {
@@ -46,12 +47,12 @@ export default class MainPageComponent extends Component {
 
         const signInButton = document.createElement("button");
         signInButton.innerHTML = "Sign In";
-        signInButton.onclick = (e) => {
+        signInButton.onclick = async (e) => {
             e.preventDefault();
 
             this.send(MainPageClientAction.SignIn, {
                 username: usernameInput.value,
-                password: passwordInput.value
+                password: await sha256(passwordInput.value)
             });
         };
         signInForm.appendChild(signInButton);
@@ -85,18 +86,17 @@ export default class MainPageComponent extends Component {
 
         const createAccountButton = document.createElement("button");
         createAccountButton.innerHTML = "Create Account";
-        createAccountButton.onclick = (e) => {
+        createAccountButton.onclick = async (e) => {
             e.preventDefault();
 
             if (newPasswordInput.value !== confirmPasswordInput.value) {
-                console.error("Passwords do not match");
+                createAccountErrorLabel.innerText = "Passwords do not match";
                 return;
             }
 
             this.send(MainPageClientAction.CreateAccount, {
                 username: newUsernameInput.value,
-                password: newPasswordInput.value,
-                confirmPassword: confirmPasswordInput.value
+                password: await sha256(newPasswordInput.value),
             });
         };
         createAccountForm.appendChild(createAccountButton);
@@ -111,10 +111,10 @@ export default class MainPageComponent extends Component {
     action(action: number, args?: any) {
         switch (action) {
             case MainPageServerAction.SignInError:
-                document.getElementById("signInErrorLabel").innerHTML = args;
+                //document.getElementById("signInErrorLabel").innerHTML = args;
                 break;
             case MainPageServerAction.CreateAccountError:
-                document.getElementById("createAccountErrorLabel").innerHTML = args;
+                //document.getElementById("createAccountErrorLabel").innerHTML = args;
                 break;
             default:
                 console.error("Unknown action:", action);
