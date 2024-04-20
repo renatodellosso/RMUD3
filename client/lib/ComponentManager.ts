@@ -1,10 +1,10 @@
 ﻿import Component from "./Component";
-import MainPageComponent from "./Components/MainPageComponent";
+import SignInPageComponent from "./Components/SignInPageComponent";
 import ConnectionManager from "./ConnectionManager";
 
 export default class ComponentManager {
     componentMap: { [id: string]: (ConnectionManager: ConnectionManager, id: string, parent?: Component, args?: any) => Component } = {
-        MainPageComponent: (connectionManager, id, parent) => new MainPageComponent(connectionManager, id, parent)
+        SignInPageComponent: (connectionManager, id, parent) => new SignInPageComponent(connectionManager, id, parent)
     };
 
     rootComponent: Component | null = null;

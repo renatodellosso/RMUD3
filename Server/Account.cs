@@ -1,4 +1,6 @@
 ﻿using Konscious.Security.Cryptography;
+using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,17 +8,22 @@ namespace RMUD3.Server
 {
 	public class Account : SignInCredentials
 	{
+		// [Key] sets the primary key
+		[Key]
+		public ObjectId Id { get; private init; }
 
 		private readonly byte[] salt;
 
-		public Account(string username, string password) : base(username, password)
+		public Account(string username, string password) : base(username, null)
 		{
+			Id = new ObjectId();
 			salt = GenerateSalt();
+			Password = Hash(password, salt);
 		}
 
 		private static string Hash(string password, byte[] salt, IEnvService? envService = null)
 		{
-			envService ??= Services.GetEnv();
+			envService ??= Services.Env;
 
 			ArgumentNullException.ThrowIfNull(envService);
 
@@ -39,6 +46,11 @@ namespace RMUD3.Server
 			RandomNumberGenerator.Create().GetNonZeroBytes(buffer);
 
 			return buffer;
+		}
+
+		public bool VerifyPassword(string password)
+		{
+			return Password == Hash(password, salt);
 		}
 	}
 }

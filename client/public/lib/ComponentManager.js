@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var MainPageComponent_1 = require("./Components/MainPageComponent");
+var SignInPageComponent_1 = require("./Components/SignInPageComponent");
 var ComponentManager = /** @class */ (function () {
     function ComponentManager() {
         this.componentMap = {
-            MainPageComponent: function (connectionManager, id, parent) { return new MainPageComponent_1.default(connectionManager, id, parent); }
+            SignInPageComponent: function (connectionManager, id, parent) { return new SignInPageComponent_1.default(connectionManager, id, parent); }
         };
         this.rootComponent = null;
     }

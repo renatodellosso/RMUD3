@@ -2,14 +2,14 @@
 /* eslint-disable */
 /* tslint:disable */
 
-/** Transpiled from RMUD3.Server.Components.MainPageClientAction */
-export enum MainPageClientAction {
+/** Transpiled from RMUD3.Server.Components.SignInPageClientAction */
+export enum SignInPageClientAction {
     SignIn = 0,
     CreateAccount = 1,
 }
 
-/** Transpiled from RMUD3.Server.Components.MainPageServerAction */
-export enum MainPageServerAction {
+/** Transpiled from RMUD3.Server.Components.SignInPageServerAction */
+export enum SignInPageServerAction {
     SignInError = 0,
     CreateAccountError = 1,
 }

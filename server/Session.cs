@@ -8,6 +8,8 @@ namespace RMUD3.Server
 		public ClientCommunicationManager? ClientCommunicationHandler { get; }
 		public ComponentManager? ComponentManager { get; }
 
+		public Account? Account { get; set; }
+
 		public Session(ClientCommunicationManager? clientCommunicationHandler, ComponentManager? componentManager)
 		{
 			ClientCommunicationHandler = clientCommunicationHandler;
@@ -15,8 +17,9 @@ namespace RMUD3.Server
 			if (ComponentManager != null)
 			{
 				ComponentManager.Session = this;
-				ComponentManager.Root = new MainPageComponent(this);
+				ComponentManager.Root = new SignInPageComponent(this);
 			}
 		}
+
 	}
 }

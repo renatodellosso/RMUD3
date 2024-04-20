@@ -6,6 +6,7 @@ namespace RMUD3.Server
 	public interface IEnvService
 	{
 		public string MongoDbUri { get; }
+		public string DbName { get; }
 
 		public byte[] Pepper { get; }
 		public int Parallelism { get; }
@@ -24,6 +25,7 @@ namespace RMUD3.Server
 		}
 
 		public string MongoDbUri => env["MONGODB_URI"];
+		public string DbName => env["DB_NAME"];
 
 		public byte[] Pepper => Encoding.UTF8.GetBytes(env["PEPPER"]);
 		public int Parallelism => int.Parse(env["PARALLELISM"]);

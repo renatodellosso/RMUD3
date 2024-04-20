@@ -56,9 +56,9 @@ public class Program
 		builder.Services.AddControllers();
 		builder.Services.AddSignalR();
 		builder.Services.AddSingleton<IEnvService, EnvService>();
+		builder.Services.AddSingleton<IDbService, DbService>();
 		builder.Services.AddSingleton<ISessionManagerService, SessionManagerService>();
 		builder.Services.AddSingleton<IUserIdProvider, SessionIdBasedUserIdProvider>();
-		builder.Services.AddSingleton<IDbService, DbService>();
 	}
 
 }

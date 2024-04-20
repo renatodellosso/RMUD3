@@ -54,12 +54,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Component_1 = require("../Component");
 var RMUD3_Server_Components_1 = require("../transpiled/RMUD3.Server.Components");
 var utils_1 = require("../utils");
-var MainPageComponent = /** @class */ (function (_super) {
-    __extends(MainPageComponent, _super);
-    function MainPageComponent() {
+var SignInPageComponent = /** @class */ (function (_super) {
+    __extends(SignInPageComponent, _super);
+    function SignInPageComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    MainPageComponent.prototype.enable = function (args) {
+    SignInPageComponent.prototype.enable = function (args) {
         var _this = this;
         console.log("Main page enabled");
         var page = document.createElement("div");
@@ -107,7 +107,7 @@ var MainPageComponent = /** @class */ (function (_super) {
                             return [2 /*return*/];
                         }
                         _a = this.send;
-                        _b = [RMUD3_Server_Components_1.MainPageClientAction.SignIn];
+                        _b = [RMUD3_Server_Components_1.SignInPageClientAction.SignIn];
                         _c = {
                             Username: usernameInput.value
                         };
@@ -159,7 +159,7 @@ var MainPageComponent = /** @class */ (function (_super) {
                             return [2 /*return*/];
                         }
                         _a = this.send;
-                        _b = [RMUD3_Server_Components_1.MainPageClientAction.CreateAccount];
+                        _b = [RMUD3_Server_Components_1.SignInPageClientAction.CreateAccount];
                         _c = {
                             Username: newUsernameInput.value
                         };
@@ -174,22 +174,22 @@ var MainPageComponent = /** @class */ (function (_super) {
         createAccountForm.appendChild(createAccountButton);
         createAccountForm.appendChild(createAccountErrorLabel);
     };
-    MainPageComponent.prototype.disable = function () {
+    SignInPageComponent.prototype.disable = function () {
         document.getElementById(this.id).remove();
     };
-    MainPageComponent.prototype.action = function (action, args) {
+    SignInPageComponent.prototype.action = function (action, args) {
         switch (action) {
-            case RMUD3_Server_Components_1.MainPageServerAction.SignInError:
+            case RMUD3_Server_Components_1.SignInPageServerAction.SignInError:
                 document.getElementById("signInErrorLabel").innerHTML = args;
                 break;
-            case RMUD3_Server_Components_1.MainPageServerAction.CreateAccountError:
+            case RMUD3_Server_Components_1.SignInPageServerAction.CreateAccountError:
                 document.getElementById("createAccountErrorLabel").innerHTML = args;
                 break;
             default:
                 console.error("Unknown action:", action);
         }
     };
-    return MainPageComponent;
+    return SignInPageComponent;
 }(Component_1.default));
-exports.default = MainPageComponent;
-//# sourceMappingURL=MainPageComponent.js.map
+exports.default = SignInPageComponent;
+//# sourceMappingURL=SignInPageComponent.js.map

@@ -31,14 +31,19 @@ namespace RMUD3.Server
 			return instance.app.Services.GetRequiredService<T>();
 		}
 
-		public static IHubContext<MiddlewareHub, IMiddlewareHubClient>? GetHubContext()
+		public static IHubContext<MiddlewareHub, IMiddlewareHubClient>? HubContext
 		{
-			return GetService<IHubContext<MiddlewareHub, IMiddlewareHubClient>>();
+			get => GetService<IHubContext<MiddlewareHub, IMiddlewareHubClient>>();
 		}
 
-		public static IEnvService? GetEnv()
+		public static IEnvService? Env
 		{
-			return GetService<IEnvService>();
+			get => GetService<IEnvService>();
+		}
+
+		public static IDbService? Db
+		{
+			get => GetService<IDbService>();
 		}
 
 	}

@@ -1,8 +1,8 @@
 ﻿import Component from "../Component";
-import { MainPageClientAction, MainPageServerAction } from "../transpiled/RMUD3.Server.Components";
+import { SignInPageClientAction, SignInPageServerAction } from "../transpiled/RMUD3.Server.Components";
 import { sha256 } from "../utils";
 
-export default class MainPageComponent extends Component {
+export default class SignInPageComponent extends Component {
     enable(args?: any) {
         console.log("Main page enabled");
 
@@ -28,7 +28,7 @@ export default class MainPageComponent extends Component {
 
         // Create sign in form
         const signInForm = document.createElement("form");
-        signInForm.className = "flex flex-col";
+        signInForm.className = "w-full flex flex-col";
         forms.appendChild(signInForm);
 
         const usernameInput = document.createElement("input");
@@ -50,9 +50,14 @@ export default class MainPageComponent extends Component {
         signInButton.onclick = async (e) => {
             e.preventDefault();
 
-            this.send(MainPageClientAction.SignIn, {
-                username: usernameInput.value,
-                password: await sha256(passwordInput.value)
+            if (usernameInput.value === "" || passwordInput.value === "") {
+                signInErrorLabel.innerText = "Username and password cannot be empty";
+                return;
+            }
+
+            this.send(SignInPageClientAction.SignIn, {
+                Username: usernameInput.value,
+                Password: await sha256(passwordInput.value)
             });
         };
         signInForm.appendChild(signInButton);
@@ -61,7 +66,7 @@ export default class MainPageComponent extends Component {
 
         // Create create account form
         const createAccountForm = document.createElement("form");
-        createAccountForm.className = "flex flex-col";
+        createAccountForm.className = "w-full flex flex-col";
         forms.appendChild(createAccountForm);
 
         const newUsernameInput = document.createElement("input");
@@ -89,14 +94,19 @@ export default class MainPageComponent extends Component {
         createAccountButton.onclick = async (e) => {
             e.preventDefault();
 
+            if (newUsernameInput.value === "" || newPasswordInput.value === "") {
+                createAccountErrorLabel.innerText = "Username and password cannot be empty";
+                return;
+            }
+
             if (newPasswordInput.value !== confirmPasswordInput.value) {
                 createAccountErrorLabel.innerText = "Passwords do not match";
                 return;
             }
 
-            this.send(MainPageClientAction.CreateAccount, {
-                username: newUsernameInput.value,
-                password: await sha256(newPasswordInput.value),
+            this.send(SignInPageClientAction.CreateAccount, {
+                Username: newUsernameInput.value,
+                Password: await sha256(newPasswordInput.value),
             });
         };
         createAccountForm.appendChild(createAccountButton);
@@ -110,11 +120,11 @@ export default class MainPageComponent extends Component {
 
     action(action: number, args?: any) {
         switch (action) {
-            case MainPageServerAction.SignInError:
-                //document.getElementById("signInErrorLabel").innerHTML = args;
+            case SignInPageServerAction.SignInError:
+                document.getElementById("signInErrorLabel").innerHTML = args;
                 break;
-            case MainPageServerAction.CreateAccountError:
-                //document.getElementById("createAccountErrorLabel").innerHTML = args;
+            case SignInPageServerAction.CreateAccountError:
+                document.getElementById("createAccountErrorLabel").innerHTML = args;
                 break;
             default:
                 console.error("Unknown action:", action);

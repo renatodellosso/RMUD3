@@ -14,7 +14,7 @@ namespace RMUD3.Server
 
 		public IHubContext<MiddlewareHub, IMiddlewareHubClient>? GetHubContext()
 		{
-			hubContext ??= Services.GetHubContext();
+			hubContext ??= Services.HubContext;
 			return hubContext;
 		}
 	}
