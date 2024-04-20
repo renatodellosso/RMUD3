@@ -10,15 +10,20 @@ namespace RMUD3.Server
 	{
 		// [Key] sets the primary key
 		[Key]
-		public ObjectId Id { get; private init; }
+		public ObjectId Id { get; private set; }
 
 		private readonly byte[] salt;
 
-		public Account(string username, string password) : base(username, null)
+		public Account() : base("", null)
+		{
+			salt = [];
+		}
+
+		public Account(SignInCredentials creds) : base(creds.Username, null)
 		{
 			Id = new ObjectId();
 			salt = GenerateSalt();
-			Password = Hash(password, salt);
+			Password = Hash(creds.Password ?? "", salt);
 		}
 
 		private static string Hash(string password, byte[] salt, IEnvService? envService = null)
@@ -50,6 +55,8 @@ namespace RMUD3.Server
 
 		public bool VerifyPassword(string password)
 		{
+			Console.WriteLine($"Salt: {salt}");
+			Console.WriteLine($"{Password} - {Hash(password, salt)}");
 			return Password == Hash(password, salt);
 		}
 	}

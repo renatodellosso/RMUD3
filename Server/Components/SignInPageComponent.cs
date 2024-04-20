@@ -87,7 +87,7 @@ namespace RMUD3.Server.Components
 			if (accounts.Any(a => a.Username == creds.Username))
 				return new("Username taken");
 
-			var account = new Account(creds.Username, creds.Password);
+			var account = new Account(creds);
 			accounts.Add(account);
 			db.SaveChanges();
 
@@ -108,8 +108,12 @@ namespace RMUD3.Server.Components
 			if (account is null)
 				return new(ERROR_MSG);
 
+			Console.WriteLine(creds.Password);
 			if (!account.VerifyPassword(creds.Password))
+			{
+				Console.WriteLine($"User failed to sign in: {creds.Username}");
 				return new(ERROR_MSG);
+			}
 
 			Console.WriteLine($"Account signed in: {creds.Username}");
 			return new(account);
