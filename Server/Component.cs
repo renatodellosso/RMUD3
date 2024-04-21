@@ -9,7 +9,7 @@ namespace RMUD3.Server
 
 		private bool enabled;
 
-		private readonly Session session;
+		protected ComponentManager? ComponentManager { get; private init; }
 
 		public ActionHandler? ActionHandler { get; set; }
 
@@ -18,10 +18,10 @@ namespace RMUD3.Server
 
 		private readonly Dictionary<string, Component> children = [];
 
-		public Component(string id, Session session, Component? parent = null)
+		public Component(string id, ComponentManager componentManager, Component? parent = null)
 		{
 			Id = id;
-			this.session = session;
+			this.ComponentManager = componentManager;
 			this.parent = parent;
 		}
 
@@ -52,7 +52,7 @@ namespace RMUD3.Server
 		/// </summary>
 		public void Enable()
 		{
-			session?.ClientCommunicationHandler?.Client?.EnableComponent(Path, GetType().Name, GetEnableData());
+			ComponentManager?.Session?.ClientCommunicationHandler?.Client?.EnableComponent(Path, GetType().Name, GetEnableData());
 			enabled = true;
 			EnableChildren();
 		}
@@ -73,7 +73,7 @@ namespace RMUD3.Server
 		/// </summary>
 		public void Disable()
 		{
-			session?.ClientCommunicationHandler?.Client?.DisableComponent(Path);
+			ComponentManager?.Session?.ClientCommunicationHandler?.Client?.DisableComponent(Path);
 			enabled = false;
 			DisableChildren();
 		}
@@ -96,7 +96,7 @@ namespace RMUD3.Server
 		protected void ExecuteAction(Enum action, object? args = null)
 		{
 			if (enabled)
-				session?.ClientCommunicationHandler?.Client?.Action(Path, action.GetHashCode(), args);
+				ComponentManager?.Session?.ClientCommunicationHandler?.Client?.Action(Path, action.GetHashCode(), args);
 			else
 				throw new Exception("Component is disabled.");
 		}

@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var MainMenuPageComponent_1 = require("./Components/MainMenuPageComponent");
 var SignInPageComponent_1 = require("./Components/SignInPageComponent");
 var ComponentManager = /** @class */ (function () {
     function ComponentManager() {
         this.componentMap = {
-            SignInPageComponent: function (connectionManager, id, parent) { return new SignInPageComponent_1.default(connectionManager, id, parent); }
+            SignInPageComponent: function (connectionManager, id, parent) { return new SignInPageComponent_1.default(connectionManager, id, parent); },
+            MainMenuPageComponent: function (connectionManager, id, parent) { return new MainMenuPageComponent_1.default(connectionManager, id, parent); },
         };
         this.rootComponent = null;
     }

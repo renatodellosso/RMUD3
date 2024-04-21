@@ -19,7 +19,7 @@ namespace RMUD3.Server.Components
 
 	public class SignInPageComponent : Component
 	{
-		public SignInPageComponent(Session session) : base("root", session)
+		public SignInPageComponent(ComponentManager componentManager) : base("root", componentManager)
 		{
 			ActionHandler = new()
 			{
@@ -29,8 +29,13 @@ namespace RMUD3.Server.Components
 
 						if (auth.Account is not null)
 						{
-							session.Account = auth.Account;
+							if (ComponentManager?.Session is null)
+								throw new InvalidOperationException("Session not initialized");
+							ComponentManager.Session.Account = auth.Account;
+
 							ExecuteAction(SignInPageServerAction.SignInError, "Signed in successfully");
+
+							OnSignIn();
 							return;
 						}
 
@@ -43,8 +48,13 @@ namespace RMUD3.Server.Components
 
 						if (auth.Account is not null)
 						{
-							session.Account = auth.Account;
+							if (ComponentManager?.Session is null)
+								throw new InvalidOperationException("Session not initialized");
+							ComponentManager.Session.Account = auth.Account;
+
 							ExecuteAction(SignInPageServerAction.CreateAccountError, "Account created successfully");
+
+							OnSignIn();
 							return;
 						}
 
@@ -108,7 +118,6 @@ namespace RMUD3.Server.Components
 			if (account is null)
 				return new(ERROR_MSG);
 
-			Console.WriteLine(creds.Password);
 			if (!account.VerifyPassword(creds.Password))
 			{
 				Console.WriteLine($"User failed to sign in: {creds.Username}");
@@ -117,6 +126,12 @@ namespace RMUD3.Server.Components
 
 			Console.WriteLine($"Account signed in: {creds.Username}");
 			return new(account);
+		}
+
+		private void OnSignIn()
+		{
+			if (ComponentManager is not null)
+				ComponentManager.Root = new MainMenuPageComponent(ComponentManager);
 		}
 
 	}

@@ -29,7 +29,9 @@ namespace RMUD3.Server
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Account>().ToCollection("accounts");
+			var account = modelBuilder.Entity<Account>();
+			account.Property("salt");
+			account.ToCollection("accounts");
 		}
 
 	}

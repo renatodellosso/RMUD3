@@ -17,7 +17,7 @@ namespace RMUD3.Server
 			if (ComponentManager != null)
 			{
 				ComponentManager.Session = this;
-				ComponentManager.Root = new SignInPageComponent(this);
+				ComponentManager.Root = new SignInPageComponent(ComponentManager);
 			}
 		}
 

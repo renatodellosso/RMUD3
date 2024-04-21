@@ -12,7 +12,7 @@ namespace RMUD3.Server
 		[Key]
 		public ObjectId Id { get; private set; }
 
-		private readonly byte[] salt;
+		private byte[] salt;
 
 		public Account() : base("", null)
 		{
@@ -55,8 +55,6 @@ namespace RMUD3.Server
 
 		public bool VerifyPassword(string password)
 		{
-			Console.WriteLine($"Salt: {salt}");
-			Console.WriteLine($"{Password} - {Hash(password, salt)}");
 			return Password == Hash(password, salt);
 		}
 	}
