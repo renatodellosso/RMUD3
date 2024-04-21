@@ -11,6 +11,10 @@ public class Program
 
 	public static void Main(string[] args)
 	{
+		Content.Content.Load().Wait();
+		if (args.Contains("--verify-content") || args.Contains("-vc"))
+			Environment.Exit(0);
+
 		ConfigureApp();
 
 		if (app is null)

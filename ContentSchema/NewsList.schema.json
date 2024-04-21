@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "NewsList",
+
+  "type": "array",
+
+  "items": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "date": {
+        "type": "string"
+      },
+      "content": {
+        "type": "string"
+      },
+    },
+    "required": [ "title", "content", "date" ]
+  }
+}
