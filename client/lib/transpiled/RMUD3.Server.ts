@@ -6,8 +6,8 @@
 export type NewsItem = {
     /** Transpiled from string */
     title: string;
-    /** Transpiled from string */
-    date: string;
+    /** Transpiled from System.DateTime */
+    date: (Date | string);
     /** Transpiled from string */
     content: string;
 }

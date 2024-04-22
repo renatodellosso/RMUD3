@@ -60,7 +60,7 @@ var MainMenuPageComponent = /** @class */ (function (_super) {
             title_1.className = "text-lg";
             element.appendChild(title_1);
             var content = document.createElement("p");
-            content.innerText = "".concat(item.date, "\n").concat(item.content);
+            content.innerText = "".concat(item.date.toLocaleString(), "\n").concat(item.content);
             element.appendChild(content);
         }
     };

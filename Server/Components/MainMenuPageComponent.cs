@@ -1,4 +1,5 @@
-﻿using Tapper;
+﻿using RMUD3.Server.Content.Lists;
+using Tapper;
 
 namespace RMUD3.Server.Components
 {
@@ -24,7 +25,7 @@ namespace RMUD3.Server.Components
 
 		protected override object? GetEnableData()
 		{
-			return new MainMenuEnableData(ComponentManager?.Session?.Account?.Username ?? "Unknown", [new("Test", "4/21/24", "Hello"), new("Test2", "4/21/1912", "Owen smells")]);
+			return new MainMenuEnableData(ComponentManager?.Session?.Account?.Username ?? "Unknown", News.Items);
 		}
 	}
 }

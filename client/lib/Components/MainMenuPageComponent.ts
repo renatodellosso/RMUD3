@@ -13,7 +13,7 @@ export default class MainMenuPageComponent extends Component {
         document.getElementsByTagName("body")[0].appendChild(page);
 
         const title = document.createElement("h1");
-        title.innerText = `Welcome back ${data.username}`;
+        title.innerText = `Welcome back, ${data.username}.`;
         title.className = "text-xl border-b border-white";
         page.appendChild(title);
 
@@ -50,8 +50,10 @@ export default class MainMenuPageComponent extends Component {
             title.className = "text-lg";
             element.appendChild(title);
 
+            const date = typeof item.date == "string" ? new Date(item.date as string) : item.date as Date;
+
             const content = document.createElement("p");
-            content.innerText = `${item.date}\n${item.content}`;
+            content.innerText = `${date.toLocaleString()}\n${item.content}`;
             element.appendChild(content);
         }
     }

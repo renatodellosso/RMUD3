@@ -21,7 +21,13 @@
 			Console.WriteLine($"Loading content type: {TypeName}...");
 			foreach (ContentFile file in files)
 				LoadFile(file);
+			AfterLoad();
 		}
+
+		/// <summary>
+		/// Called after all files have been loaded.
+		/// </summary>
+		protected virtual void AfterLoad() { }
 
 		protected abstract void LoadFile(ContentFile load);
 	}

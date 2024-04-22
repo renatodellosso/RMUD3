@@ -38,6 +38,6 @@
     <Exec Command="tapper --project RMUD3.csproj --output client/lib/transpiled&#xD;&#xA;npm run dev" />
   </Target>
 
-  <ProjectExtensions><VisualStudio><UserProperties content_4news_1newslist_1json__JsonSchema="../ContentSchema/NewsList.schema.json" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>
