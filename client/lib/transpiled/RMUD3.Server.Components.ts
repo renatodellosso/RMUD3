@@ -3,12 +3,29 @@
 /* tslint:disable */
 import type { NewsItem } from './RMUD3.Server';
 
-/** Transpiled from RMUD3.Server.Components.MainMenuPageComponent.MainMenuEnableData */
+/** Transpiled from RMUD3.Server.Components.MainMenuEnableData */
 export type MainMenuEnableData = {
     /** Transpiled from string */
     username: string;
     /** Transpiled from RMUD3.Server.NewsItem[] */
     news: NewsItem[];
+    /** Transpiled from RMUD3.Server.Components.PlayerSummary[] */
+    players: PlayerSummary[];
+}
+
+/** Transpiled from RMUD3.Server.Components.PlayerSummary */
+export type PlayerSummary = {
+    /** Transpiled from string */
+    location: string;
+    /** Transpiled from string */
+    id: string;
+    /** Transpiled from System.DateTime */
+    lastPlayed: (Date | string);
+}
+
+/** Transpiled from RMUD3.Server.Components.MainMenuClientAction */
+export enum MainMenuClientAction {
+    NewGame = 0,
 }
 
 /** Transpiled from RMUD3.Server.Components.SignInPageClientAction */

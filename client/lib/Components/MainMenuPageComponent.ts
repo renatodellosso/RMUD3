@@ -1,5 +1,6 @@
 ﻿import Component from "../Component";
-import { MainMenuEnableData } from "../transpiled/RMUD3.Server.Components";
+import { MainMenuClientAction, MainMenuEnableData } from "../transpiled/RMUD3.Server.Components";
+import { parseDate } from "../utils";
 
 export default class MainMenuPageComponent extends Component {
     enable(args?: any): void {
@@ -25,10 +26,19 @@ export default class MainMenuPageComponent extends Component {
         sidebar.className = "w-[10%] border-r border-white";
         horizontalSplit.appendChild(sidebar);
 
-        const playButton = document.createElement("button");
-        playButton.innerText = "Play";
-        playButton.className = "w-full";
-        sidebar.appendChild(playButton);
+        // Add buttons to the sidebar
+        const newGameButton = document.createElement("button");
+        newGameButton.innerText = "New Game";
+        newGameButton.className = "w-full";
+        newGameButton.onclick = () => this.send(MainMenuClientAction.NewGame);
+        sidebar.appendChild(newGameButton);
+
+        for (const player of data.players) {
+            const loadGameButton = document.createElement("button");
+            loadGameButton.innerText = `Load: ${player.location} - Last Played: ${parseDate(player.lastPlayed).toLocaleString()}`;
+            loadGameButton.className = "w-full";
+            sidebar.appendChild(loadGameButton);
+        }
 
         const news = document.createElement("div");
         news.className = "w-[90%] p-1";
@@ -50,10 +60,8 @@ export default class MainMenuPageComponent extends Component {
             title.className = "text-lg";
             element.appendChild(title);
 
-            const date = typeof item.date == "string" ? new Date(item.date as string) : item.date as Date;
-
             const content = document.createElement("p");
-            content.innerText = `${date.toLocaleString()}\n${item.content}`;
+            content.innerText = `${parseDate(item.date).toLocaleString()}\n${item.content}`;
             element.appendChild(content);
         }
     }

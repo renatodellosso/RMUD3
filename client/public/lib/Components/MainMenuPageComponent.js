@@ -16,12 +16,15 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Component_1 = require("../Component");
+var RMUD3_Server_Components_1 = require("../transpiled/RMUD3.Server.Components");
+var utils_1 = require("../utils");
 var MainMenuPageComponent = /** @class */ (function (_super) {
     __extends(MainMenuPageComponent, _super);
     function MainMenuPageComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     MainMenuPageComponent.prototype.enable = function (args) {
+        var _this = this;
         var data = args;
         console.log("Main menu page enabled");
         var page = document.createElement("div");
@@ -29,7 +32,7 @@ var MainMenuPageComponent = /** @class */ (function (_super) {
         page.className = "w-full h-screen flex flex-col";
         document.getElementsByTagName("body")[0].appendChild(page);
         var title = document.createElement("h1");
-        title.innerText = "Welcome back ".concat(data.username);
+        title.innerText = "Welcome back, ".concat(data.username, ".");
         title.className = "text-xl border-b border-white";
         page.appendChild(title);
         var horizontalSplit = document.createElement("div");
@@ -38,10 +41,19 @@ var MainMenuPageComponent = /** @class */ (function (_super) {
         var sidebar = document.createElement("div");
         sidebar.className = "w-[10%] border-r border-white";
         horizontalSplit.appendChild(sidebar);
-        var playButton = document.createElement("button");
-        playButton.innerText = "Play";
-        playButton.className = "w-full";
-        sidebar.appendChild(playButton);
+        // Add buttons to the sidebar
+        var newGameButton = document.createElement("button");
+        newGameButton.innerText = "New Game";
+        newGameButton.className = "w-full";
+        newGameButton.onclick = function () { return _this.send(RMUD3_Server_Components_1.MainMenuClientAction.NewGame); };
+        sidebar.appendChild(newGameButton);
+        for (var _i = 0, _a = data.players; _i < _a.length; _i++) {
+            var player = _a[_i];
+            var loadGameButton = document.createElement("button");
+            loadGameButton.innerText = "Load: ".concat(player.location, " - Last Played: ").concat((0, utils_1.parseDate)(player.lastPlayed).toLocaleString());
+            loadGameButton.className = "w-full";
+            sidebar.appendChild(loadGameButton);
+        }
         var news = document.createElement("div");
         news.className = "w-[90%] p-1";
         horizontalSplit.appendChild(news);
@@ -50,8 +62,8 @@ var MainMenuPageComponent = /** @class */ (function (_super) {
         newsTitle.className = "text-lg";
         news.appendChild(newsTitle);
         // Add news
-        for (var _i = 0, _a = data.news; _i < _a.length; _i++) {
-            var item = _a[_i];
+        for (var _b = 0, _c = data.news; _b < _c.length; _b++) {
+            var item = _c[_b];
             var element = document.createElement("div");
             element.className = "border border-white p-1 mb-1";
             news.appendChild(element);
@@ -60,7 +72,7 @@ var MainMenuPageComponent = /** @class */ (function (_super) {
             title_1.className = "text-lg";
             element.appendChild(title_1);
             var content = document.createElement("p");
-            content.innerText = "".concat(item.date.toLocaleString(), "\n").concat(item.content);
+            content.innerText = "".concat((0, utils_1.parseDate)(item.date).toLocaleString(), "\n").concat(item.content);
             element.appendChild(content);
         }
     };

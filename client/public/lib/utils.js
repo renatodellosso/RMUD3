@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sha256 = void 0;
+exports.parseDate = exports.sha256 = void 0;
 function sha256(input) {
     return __awaiter(this, void 0, void 0, function () {
         var encoder, data;
@@ -50,4 +50,8 @@ function sha256(input) {
     });
 }
 exports.sha256 = sha256;
+function parseDate(date) {
+    return typeof date == "string" ? new Date(date) : date;
+}
+exports.parseDate = parseDate;
 //# sourceMappingURL=utils.js.map

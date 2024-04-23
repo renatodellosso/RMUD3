@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignInPageServerAction = exports.SignInPageClientAction = void 0;
+exports.SignInPageServerAction = exports.SignInPageClientAction = exports.MainMenuClientAction = void 0;
+/** Transpiled from RMUD3.Server.Components.MainMenuClientAction */
+var MainMenuClientAction;
+(function (MainMenuClientAction) {
+    MainMenuClientAction[MainMenuClientAction["NewGame"] = 0] = "NewGame";
+})(MainMenuClientAction || (exports.MainMenuClientAction = MainMenuClientAction = {}));
 /** Transpiled from RMUD3.Server.Components.SignInPageClientAction */
 var SignInPageClientAction;
 (function (SignInPageClientAction) {

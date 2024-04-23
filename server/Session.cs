@@ -9,6 +9,7 @@ namespace RMUD3.Server
 		public ComponentManager? ComponentManager { get; }
 
 		public Account? Account { get; set; }
+		public Player? Player { get; set; }
 
 		public Session(ClientCommunicationManager? clientCommunicationHandler, ComponentManager? componentManager)
 		{

@@ -14,16 +14,24 @@ namespace RMUD3.Server
 
 		private byte[] salt;
 
+		public List<ObjectId> Players { get; set; }
+
+		/// <summary>
+		/// Called by Entity Framework
+		/// </summary>
 		public Account() : base("", null)
 		{
 			salt = [];
+			Players = [];
 		}
 
 		public Account(SignInCredentials creds) : base(creds.Username, null)
 		{
-			Id = new ObjectId();
+			Id = ObjectId.GenerateNewId();
 			salt = GenerateSalt();
 			Password = Hash(creds.Password ?? "", salt);
+
+			Players = [];
 		}
 
 		private static string Hash(string password, byte[] salt, IEnvService? envService = null)

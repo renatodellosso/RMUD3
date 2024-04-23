@@ -4,14 +4,14 @@ namespace RMUD3.Server.Components
 {
 
 	[TranspilationSource]
-	public enum SignInPageClientAction
+	file enum SignInPageClientAction
 	{
 		SignIn,
 		CreateAccount,
 	}
 
 	[TranspilationSource]
-	public enum SignInPageServerAction
+	file enum SignInPageServerAction
 	{
 		SignInError,
 		CreateAccountError,
