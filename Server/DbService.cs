@@ -3,10 +3,11 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.EntityFrameworkCore.Extensions;
+using RMUD3.Server.Gameplay;
 
 namespace RMUD3.Server
 {
-	public interface IDbService
+    public interface IDbService
 	{
 		public DbSet<Account> Accounts { get; init; }
 		public DbSet<Player> Players { get; init; }

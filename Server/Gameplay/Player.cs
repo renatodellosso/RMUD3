@@ -1,16 +1,12 @@
 ﻿using MongoDB.Bson;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Tapper;
 
-namespace RMUD3.Server
+namespace RMUD3.Server.Gameplay
 {
 	[TranspilationSource]
-	public class Player
+	public class Player : Creature
 	{
-		[Key]
-		[JsonIgnore]
-		public ObjectId Id { get; private set; }
 
 		[JsonIgnore]
 		public ObjectId AccountId { get; private set; }
@@ -19,9 +15,8 @@ namespace RMUD3.Server
 
 		public DateTime LastPlayed { get; private set; }
 
-		public Player(ObjectId accountId, string username)
+		public Player(ObjectId accountId, string username) : base()
 		{
-			Id = ObjectId.GenerateNewId();
 			AccountId = accountId;
 			Username = username;
 
