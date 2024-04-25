@@ -11,16 +11,16 @@ namespace RMUD3.Server.Gameplay
 		[JsonIgnore]
 		public ObjectId AccountId { get; private set; }
 
-		public string Username { get; private set; }
-
 		public DateTime LastPlayed { get; private set; }
 
-		public Player(ObjectId accountId, string username) : base()
+		public Player(ObjectId accountId, string name) : base()
 		{
 			AccountId = accountId;
-			Username = username;
+			Name = name;
 
 			LastPlayed = DateTime.Now;
+
+			LocationId = "Start";
 		}
 	}
 }

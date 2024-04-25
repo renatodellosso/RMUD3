@@ -26,6 +26,7 @@ export type PlayerSummary = {
 /** Transpiled from RMUD3.Server.Components.MainMenuClientAction */
 export enum MainMenuClientAction {
     NewGame = 0,
+    LoadGame = 1,
 }
 
 /** Transpiled from RMUD3.Server.Components.SignInPageClientAction */

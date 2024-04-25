@@ -51,5 +51,7 @@ namespace RMUD3.Server
 			}
 		}
 
+		public byte[] EncryptionKey => Encoding.UTF8.GetBytes(env["ENCRYPTION_KEY"]);
+
 	}
 }

@@ -3,10 +3,10 @@ using RMUD3.Server.Gameplay;
 
 namespace RMUD3.Server
 {
-    public class Session
+	public class Session
 	{
 
-		public ClientCommunicationManager? ClientCommunicationHandler { get; }
+		public ClientCommunicationManager? ClientCommunicationHandler { get; set; }
 		public ComponentManager? ComponentManager { get; }
 
 		public Account? Account { get; set; }

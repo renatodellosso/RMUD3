@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Location",
+
+  "type": "object",
+  "properties": {
+    "Name": {
+      "type": "string"
+    },
+    "Size": {
+      "type": "string"
+    }
+  },
+  "required": [ "name" ]
+}

@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Configurations>Debug;Release;Verify</Configurations>
+    <StartupObject>RMUD3.Server.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +25,7 @@
     </PackageReference>
     <PackageReference Include="MongoDB.EntityFrameworkCore" Version="7.0.0-preview.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
     <PackageReference Include="Tapper" Version="1.11.0" />
     <PackageReference Include="Tapper.Analyzer" Version="1.11.0">
       <PrivateAssets>all</PrivateAssets>
@@ -35,12 +38,12 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="tapper --project RMUD3.csproj --output client/lib/transpiled&#xD;&#xA;npm run dev" />
+    <Exec Condition="'$(Configuration)' != 'Verify'" Command="tapper --project RMUD3.csproj --output client/lib/transpiled&#xD;&#xA;npm run dev" />
   </Target>
 
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties />
+      <UserProperties content_4locations_4startlocation_1json__JsonSchema="../../ContentSchema/Location.schema.json" content_4news_4test_1news_1json__JsonSchema="../../ContentSchema/News.schema.json" />
     </VisualStudio>
   </ProjectExtensions>
 

@@ -47,12 +47,16 @@ var MainMenuPageComponent = /** @class */ (function (_super) {
         newGameButton.className = "w-full";
         newGameButton.onclick = function () { return _this.send(RMUD3_Server_Components_1.MainMenuClientAction.NewGame); };
         sidebar.appendChild(newGameButton);
-        for (var _i = 0, _a = data.players; _i < _a.length; _i++) {
-            var player = _a[_i];
+        var _loop_1 = function (player) {
             var loadGameButton = document.createElement("button");
             loadGameButton.innerText = "Load: ".concat(player.location, " - Last Played: ").concat((0, utils_1.parseDate)(player.lastPlayed).toLocaleString());
             loadGameButton.className = "w-full";
+            loadGameButton.onclick = function () { return _this.send(RMUD3_Server_Components_1.MainMenuClientAction.LoadGame, player.id); };
             sidebar.appendChild(loadGameButton);
+        };
+        for (var _i = 0, _a = data.players; _i < _a.length; _i++) {
+            var player = _a[_i];
+            _loop_1(player);
         }
         var news = document.createElement("div");
         news.className = "w-[90%] p-1";

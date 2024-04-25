@@ -11,11 +11,15 @@ namespace RMUD3.Server.SignalR
 
 			if (userId is null)
 			{
-				userId = Guid.NewGuid().ToString();
-				connection.User.AddIdentity(new ClaimsIdentity(claims: [new(ClaimTypes.NameIdentifier, userId)]));
+				SetUserId(connection.User, userId = Guid.NewGuid().ToString());
 			}
 
 			return userId;
+		}
+
+		public static void SetUserId(ClaimsPrincipal user, string userId)
+		{
+			user.AddIdentity(new ClaimsIdentity(claims: [new(ClaimTypes.NameIdentifier, userId)]));
 		}
 	}
 }

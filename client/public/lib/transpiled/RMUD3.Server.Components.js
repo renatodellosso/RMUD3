@@ -5,6 +5,7 @@ exports.SignInPageServerAction = exports.SignInPageClientAction = exports.MainMe
 var MainMenuClientAction;
 (function (MainMenuClientAction) {
     MainMenuClientAction[MainMenuClientAction["NewGame"] = 0] = "NewGame";
+    MainMenuClientAction[MainMenuClientAction["LoadGame"] = 1] = "LoadGame";
 })(MainMenuClientAction || (exports.MainMenuClientAction = MainMenuClientAction = {}));
 /** Transpiled from RMUD3.Server.Components.SignInPageClientAction */
 var SignInPageClientAction;

@@ -9,7 +9,7 @@ namespace RMUD3.Server
 
 		private bool enabled;
 
-		protected ComponentManager? ComponentManager { get; private init; }
+		public ComponentManager? ComponentManager { get; private init; }
 
 		public ActionHandler? ActionHandler { get; set; }
 
@@ -21,7 +21,7 @@ namespace RMUD3.Server
 		public Component(string id, ComponentManager componentManager, Component? parent = null)
 		{
 			Id = id;
-			this.ComponentManager = componentManager;
+			ComponentManager = componentManager;
 			this.parent = parent;
 		}
 
@@ -99,6 +99,11 @@ namespace RMUD3.Server
 				ComponentManager?.Session?.ClientCommunicationHandler?.Client?.Action(Path, action.GetHashCode(), args);
 			else
 				throw new Exception("Component is disabled.");
+		}
+
+		protected void AddChild(Component child)
+		{
+			children.Add(child.Id, child);
 		}
 	}
 }

@@ -20,6 +20,8 @@ export default class ConnectionManager {
         this.connection.on("EnableComponent", (path: string[], type: string, args?: any) => this.componentManager.enableComponent(this, path, type, args))
         this.connection.on("DisableComponent", (path: string[]) => this.componentManager.disableComponent(path));
 
+        this.connection.on("SetSessionId", (sessionId?: string) => sessionId && localStorage.setItem("sessionId", sessionId))
+
         this.connection.onclose(() => {
             console.log("Connection closed");
             window.onbeforeunload = null;
@@ -29,6 +31,8 @@ export default class ConnectionManager {
     start() {
         this.connection.start().then(() => {
             console.log("Connection started");
+
+            this.connection.invoke("ClientConnect", localStorage.getItem("sessionId") ?? "");
 
             window.onbeforeunload = () => true;
         }).catch(err => console.error(err.toString()));

@@ -18,9 +18,19 @@
 
 		public void Load()
 		{
-			Console.WriteLine($"Loading content type: {TypeName}...");
+			Console.WriteLine($"Loading content type: {TypeName} with {files.Count} files...");
 			foreach (ContentFile file in files)
-				LoadFile(file);
+			{
+				try { LoadFile(file); }
+				catch (ContentLoadException e)
+				{
+					throw;
+				}
+				catch (Exception e)
+				{
+					throw new ContentLoadException(file, e);
+				}
+			}
 			AfterLoad();
 		}
 
@@ -29,6 +39,6 @@
 		/// </summary>
 		protected virtual void AfterLoad() { }
 
-		protected abstract void LoadFile(ContentFile load);
+		protected abstract void LoadFile(ContentFile file);
 	}
 }

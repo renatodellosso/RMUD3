@@ -17,7 +17,14 @@ namespace RMUD3.Server.Content
 		public static async Task Load()
 		{
 			instance = new();
-			instance.LoadInstance();
+			var task = instance.LoadInstance();
+			await task;
+
+			if (task.IsFaulted)
+			{
+				Console.WriteLine("Failed to load content");
+				Console.WriteLine(task.Exception);
+			}
 		}
 
 		private void MapContentTypes()
@@ -35,7 +42,7 @@ namespace RMUD3.Server.Content
 			}
 		}
 
-		private async void LoadInstance()
+		private async Task LoadInstance()
 		{
 			Console.WriteLine("Loading content...");
 
@@ -45,21 +52,30 @@ namespace RMUD3.Server.Content
 			foreach (ContentType contentType in contentTypes.Values)
 				contentType.Load();
 
-			Console.WriteLine("Content loaded.");
+			Console.WriteLine("Content loaded");
 		}
 
 		private void FindContentFiles()
 		{
 			string[] filePaths = Directory.GetFiles("Content", "*.json", SearchOption.AllDirectories);
 
+			Console.WriteLine($"Found {filePaths.Length} content files");
 			foreach (string filePath in filePaths)
 			{
-				ContentFile file = new(filePath);
-				contentTypes.TryGetValue(file.Type, out ContentType? contentType);
-				if (contentType == null)
-					throw new Exception($"No content type found for file: {file.Name}.{file.Type}");
+				try
+				{
+					ContentFile file = new(filePath);
+					contentTypes.TryGetValue(file.Type, out ContentType? contentType);
+					if (contentType == null)
+						throw new Exception($"No content type found for file: {file.Name}.{file.Type}");
 
-				contentType.AddFile(file);
+					contentType.AddFile(file);
+				}
+				catch (ArgumentException e)
+				{
+					Console.WriteLine($"Failed to load file: {filePath}");
+					Console.WriteLine("\t" + e.Message);
+				}
 			}
 		}
 

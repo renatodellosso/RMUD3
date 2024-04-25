@@ -8,5 +8,8 @@
 
 		public ContentLoadException(ContentFile file, string message = "")
 			: base($"Failed to load file {file.Name} of type {file.Type} (Path: {file.Path}){(message != "" ? $": {message}" : "")}") { }
+
+		public ContentLoadException(ContentFile file, Exception innerException)
+			: base($"Failed to load file {file.Name} of type {file.Type} (Path: {file.Path})", innerException) { }
 	}
 }

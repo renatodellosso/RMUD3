@@ -37,6 +37,7 @@ export default class MainMenuPageComponent extends Component {
             const loadGameButton = document.createElement("button");
             loadGameButton.innerText = `Load: ${player.location} - Last Played: ${parseDate(player.lastPlayed).toLocaleString()}`;
             loadGameButton.className = "w-full";
+            loadGameButton.onclick = () => this.send(MainMenuClientAction.LoadGame, player.id);
             sidebar.appendChild(loadGameButton);
         }
 

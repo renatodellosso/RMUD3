@@ -12,11 +12,13 @@ export type NewsItem = {
     content: string;
 }
 
-/** Transpiled from RMUD3.Server.Player */
-export type Player = {
-    /** Transpiled from string */
-    username: string;
-    /** Transpiled from System.DateTime */
-    lastPlayed: (Date | string);
+/** Transpiled from RMUD3.Server.Vector3 */
+export type Vector3 = {
+    /** Transpiled from float */
+    x: number;
+    /** Transpiled from float */
+    y: number;
+    /** Transpiled from float */
+    z: number;
 }
 

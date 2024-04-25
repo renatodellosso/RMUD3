@@ -1,4 +1,5 @@
 ﻿import Component from "./Component";
+import GamePageComponent from "./Components/GamePage/GamePageComponent";
 import MainMenuPageComponent from "./Components/MainMenuPageComponent";
 import SignInPageComponent from "./Components/SignInPageComponent";
 import ConnectionManager from "./ConnectionManager";
@@ -7,6 +8,7 @@ export default class ComponentManager {
     componentMap: { [id: string]: (ConnectionManager: ConnectionManager, id: string, parent?: Component, args?: any) => Component } = {
         SignInPageComponent: (connectionManager, id, parent) => new SignInPageComponent(connectionManager, id, parent),
         MainMenuPageComponent: (connectionManager, id, parent) => new MainMenuPageComponent(connectionManager, id, parent),
+        GamePageComponent: (connectionManager, id, parent) => new GamePageComponent(connectionManager, id, parent),
     };
 
     rootComponent: Component | null = null;

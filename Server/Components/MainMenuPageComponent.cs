@@ -1,6 +1,8 @@
 ﻿using MongoDB.Bson;
+using RMUD3.Server.Components.GamePage;
 using RMUD3.Server.Content.Lists;
 using RMUD3.Server.Exceptions;
+using RMUD3.Server.Gameplay;
 using Tapper;
 
 namespace RMUD3.Server.Components
@@ -72,7 +74,9 @@ namespace RMUD3.Server.Components
 							throw new Exception("ComponentManager.Session is null!");
 						ComponentManager.Session.Player = player;
 
-						Console.WriteLine($"New player created for {player.Username}");
+						Console.WriteLine($"New player created for {player.Name}");
+
+						StartGame();
 					})
 				},
 				{ MainMenuClientAction.LoadGame, ActionHandler.Wrap((string rawId) =>
@@ -91,6 +95,8 @@ namespace RMUD3.Server.Components
 						if (ComponentManager.Session == null)
 							throw new Exception("ComponentManager.Session is null!");
 						ComponentManager.Session.Player = player;
+
+						StartGame();
 					})
 				}
 			};
@@ -111,6 +117,12 @@ namespace RMUD3.Server.Components
 			summaries = [.. summaries.OrderByDescending(p => p.LastPlayed)];
 
 			return new MainMenuEnableData(account?.Username ?? "Unknown", News.Items, summaries);
+		}
+
+		private void StartGame()
+		{
+			if (ComponentManager != null)
+				ComponentManager.Root = new GamePageComponent(ComponentManager);
 		}
 	}
 }

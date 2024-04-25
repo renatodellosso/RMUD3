@@ -13,8 +13,13 @@
 			string fullName = path.Split('/', '\\').Last();
 			string[] nameSections = fullName.Split('.');
 
+			if (nameSections.Length < 3)
+			{
+				throw new ArgumentException($"Invalid file name: {fullName}");
+			}
+
 			Name = nameSections[0];
-			Type = nameSections[1];
+			Type = nameSections[^2];
 		}
 
 		public string Read()
