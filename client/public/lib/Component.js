@@ -17,7 +17,7 @@ var Component = /** @class */ (function () {
     Component.prototype.send = function (action, args) {
         this.connection.send(this.getPath(), action, args);
     };
-    Component.prototype.action = function (action, args) {
+    Component.prototype.handleServerAction = function (action, args) {
     };
     return Component;
 }());

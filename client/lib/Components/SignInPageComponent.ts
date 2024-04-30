@@ -118,7 +118,7 @@ export default class SignInPageComponent extends Component {
         document.getElementById(this.id).remove();
     }
 
-    action(action: number, args?: any) {
+    handleServerAction(action: number, args?: any) {
         switch (action) {
             case SignInPageServerAction.SignInError:
                 document.getElementById("signInErrorLabel").innerHTML = args;

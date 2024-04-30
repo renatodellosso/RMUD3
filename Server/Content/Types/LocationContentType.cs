@@ -1,4 +1,5 @@
-﻿using RMUD3.Server.Gameplay;
+﻿using RMUD3.Server.Content.Lists;
+using RMUD3.Server.Gameplay;
 using System.Text.Json;
 
 namespace RMUD3.Server.Content.Types
@@ -26,6 +27,14 @@ namespace RMUD3.Server.Content.Types
 			catch (ArgumentException e)
 			{
 				throw new ContentLoadException(file, e);
+			}
+		}
+
+		protected override void AfterLoad()
+		{
+			foreach (var location in locations.Values)
+			{
+				Locations.Add(location);
 			}
 		}
 	}

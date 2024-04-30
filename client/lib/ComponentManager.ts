@@ -1,5 +1,6 @@
 ﻿import Component from "./Component";
 import GamePageComponent from "./Components/GamePage/GamePageComponent";
+import SidebarComponent from "./Components/GamePage/SidebarComponent";
 import MainMenuPageComponent from "./Components/MainMenuPageComponent";
 import SignInPageComponent from "./Components/SignInPageComponent";
 import ConnectionManager from "./ConnectionManager";
@@ -9,6 +10,7 @@ export default class ComponentManager {
         SignInPageComponent: (connectionManager, id, parent) => new SignInPageComponent(connectionManager, id, parent),
         MainMenuPageComponent: (connectionManager, id, parent) => new MainMenuPageComponent(connectionManager, id, parent),
         GamePageComponent: (connectionManager, id, parent) => new GamePageComponent(connectionManager, id, parent),
+        SidebarComponent: (connectionManager, id, parent) => new SidebarComponent(connectionManager, id, parent),
     };
 
     rootComponent: Component | null = null;
@@ -32,7 +34,14 @@ export default class ComponentManager {
         console.log("Root component is being changed!");
 
         this.rootComponent?.disable();
-        this.rootComponent = this.componentMap[type](connectionManager, "root", undefined, args);
+
+        const component = this.componentMap[type];
+        if (!component) {
+            console.error(`Component type ${type} not found`);
+            return;
+        }
+
+        this.rootComponent = component(connectionManager, "root", undefined, args);
         this.rootComponent.enable(args);
     }
 
@@ -53,6 +62,6 @@ export default class ComponentManager {
         }
 
         // Call the action
-        component.action(action, args);
+        component.handleServerAction(action, args);
     }
 }

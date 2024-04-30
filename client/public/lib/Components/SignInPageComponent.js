@@ -177,7 +177,7 @@ var SignInPageComponent = /** @class */ (function (_super) {
     SignInPageComponent.prototype.disable = function () {
         document.getElementById(this.id).remove();
     };
-    SignInPageComponent.prototype.action = function (action, args) {
+    SignInPageComponent.prototype.handleServerAction = function (action, args) {
         switch (action) {
             case RMUD3_Server_Components_1.SignInPageServerAction.SignInError:
                 document.getElementById("signInErrorLabel").innerHTML = args;

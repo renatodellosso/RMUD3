@@ -25,7 +25,8 @@ var GamePageComponent = /** @class */ (function (_super) {
         console.log("Game page enabled");
         var div = document.createElement("div");
         div.id = this.id;
-        document.appendChild(div);
+        div.className = "flex flex-row";
+        document.getElementsByTagName("body")[0].appendChild(div);
     };
     GamePageComponent.prototype.disable = function () {
     };

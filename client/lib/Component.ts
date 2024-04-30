@@ -31,7 +31,7 @@ export default abstract class Component {
 
     abstract disable(): void;
 
-    action(action: number, args?: any) {
+    handleServerAction(action: number, args?: any) {
 
     }
 }

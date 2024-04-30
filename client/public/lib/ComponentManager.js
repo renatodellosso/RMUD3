@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var GamePageComponent_1 = require("./Components/GamePage/GamePageComponent");
+var SidebarComponent_1 = require("./Components/GamePage/SidebarComponent");
 var MainMenuPageComponent_1 = require("./Components/MainMenuPageComponent");
 var SignInPageComponent_1 = require("./Components/SignInPageComponent");
 var ComponentManager = /** @class */ (function () {
@@ -9,6 +10,7 @@ var ComponentManager = /** @class */ (function () {
             SignInPageComponent: function (connectionManager, id, parent) { return new SignInPageComponent_1.default(connectionManager, id, parent); },
             MainMenuPageComponent: function (connectionManager, id, parent) { return new MainMenuPageComponent_1.default(connectionManager, id, parent); },
             GamePageComponent: function (connectionManager, id, parent) { return new GamePageComponent_1.default(connectionManager, id, parent); },
+            SidebarComponent: function (connectionManager, id, parent) { return new SidebarComponent_1.default(connectionManager, id, parent); },
         };
         this.rootComponent = null;
     }
@@ -28,7 +30,12 @@ var ComponentManager = /** @class */ (function () {
         }
         console.log("Root component is being changed!");
         (_b = this.rootComponent) === null || _b === void 0 ? void 0 : _b.disable();
-        this.rootComponent = this.componentMap[type](connectionManager, "root", undefined, args);
+        var component = this.componentMap[type];
+        if (!component) {
+            console.error("Component type ".concat(type, " not found"));
+            return;
+        }
+        this.rootComponent = component(connectionManager, "root", undefined, args);
         this.rootComponent.enable(args);
     };
     ComponentManager.prototype.disableComponent = function (path) {
@@ -45,7 +52,7 @@ var ComponentManager = /** @class */ (function () {
             return;
         }
         // Call the action
-        component.action(action, args);
+        component.handleServerAction(action, args);
     };
     return ComponentManager;
 }());

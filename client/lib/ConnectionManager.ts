@@ -12,8 +12,6 @@ export default class ConnectionManager {
         this.connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 
         this.connection.on("Action", (path: string[], action: number, args?: any) => {
-            console.log(`Received action ${action} for component:`, path, "Args:", args);
-
             this.componentManager.action(path, action, args);
         });
 
