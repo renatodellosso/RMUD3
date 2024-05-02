@@ -27,7 +27,7 @@ var SidebarComponent = /** @class */ (function (_super) {
         console.log("Sidebar enabled");
         var div = document.createElement("div");
         div.id = this.id;
-        div.className = "w-20% border-l border-white";
+        div.className = "w-20% border-l border-white p-1";
         document.getElementById("root").appendChild(div);
         this.updateInterval = setInterval((function () { return _this.send(RMUD3_Server_Components_GamePage_1.SidebarClientAction.RequestUpdate); }), 100);
     };
@@ -49,7 +49,7 @@ var SidebarComponent = /** @class */ (function (_super) {
                 locationName.innerText = data.locationName;
                 div.appendChild(locationName);
                 var creatures = document.createElement("div");
-                creatures.className = "text-white";
+                creatures.className = "text-white mt-4";
                 creatures.innerText = "Creatures:";
                 div.appendChild(creatures);
                 var creaturesList = document.createElement("ul");

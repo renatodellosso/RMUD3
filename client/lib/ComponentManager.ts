@@ -1,5 +1,6 @@
 ﻿import Component from "./Component";
 import GamePageComponent from "./Components/GamePage/GamePageComponent";
+import LogComponent from "./Components/GamePage/LogComponent";
 import SidebarComponent from "./Components/GamePage/SidebarComponent";
 import MainMenuPageComponent from "./Components/MainMenuPageComponent";
 import SignInPageComponent from "./Components/SignInPageComponent";
@@ -11,6 +12,7 @@ export default class ComponentManager {
         MainMenuPageComponent: (connectionManager, id, parent) => new MainMenuPageComponent(connectionManager, id, parent),
         GamePageComponent: (connectionManager, id, parent) => new GamePageComponent(connectionManager, id, parent),
         SidebarComponent: (connectionManager, id, parent) => new SidebarComponent(connectionManager, id, parent),
+        LogComponent: (connectionManager, id, parent) => new LogComponent(connectionManager, id, parent),
     };
 
     rootComponent: Component | null = null;

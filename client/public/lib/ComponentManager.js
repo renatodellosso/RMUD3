@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var GamePageComponent_1 = require("./Components/GamePage/GamePageComponent");
+var LogComponent_1 = require("./Components/GamePage/LogComponent");
 var SidebarComponent_1 = require("./Components/GamePage/SidebarComponent");
 var MainMenuPageComponent_1 = require("./Components/MainMenuPageComponent");
 var SignInPageComponent_1 = require("./Components/SignInPageComponent");
@@ -11,6 +12,7 @@ var ComponentManager = /** @class */ (function () {
             MainMenuPageComponent: function (connectionManager, id, parent) { return new MainMenuPageComponent_1.default(connectionManager, id, parent); },
             GamePageComponent: function (connectionManager, id, parent) { return new GamePageComponent_1.default(connectionManager, id, parent); },
             SidebarComponent: function (connectionManager, id, parent) { return new SidebarComponent_1.default(connectionManager, id, parent); },
+            LogComponent: function (connectionManager, id, parent) { return new LogComponent_1.default(connectionManager, id, parent); },
         };
         this.rootComponent = null;
     }

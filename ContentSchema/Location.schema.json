@@ -9,6 +9,9 @@
     },
     "Size": {
       "type": "string"
+    },
+    "Description": {
+      "type": "string"
     }
   },
   "required": [ "name" ]

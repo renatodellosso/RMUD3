@@ -68,15 +68,9 @@ namespace RMUD3.Server.Components
 						db.Accounts.Update(account);
 						db.SaveChanges();
 
-						if (ComponentManager == null)
-							throw new Exception("ComponentManager is null!");
-						if (ComponentManager.Session == null)
-							throw new Exception("ComponentManager.Session is null!");
-						ComponentManager.Session.Player = player;
-
 						Console.WriteLine($"New player created for {player.Name}");
 
-						StartGame();
+						StartGame(player);
 					})
 				},
 				{ MainMenuClientAction.LoadGame, ActionHandler.Wrap((string rawId) =>
@@ -90,13 +84,7 @@ namespace RMUD3.Server.Components
 						if (!account.Players.Contains(player.Id))
 							throw new Exception("Player does not belong to account!");
 
-						if (ComponentManager == null)
-							throw new Exception("ComponentManager is null!");
-						if (ComponentManager.Session == null)
-							throw new Exception("ComponentManager.Session is null!");
-						ComponentManager.Session.Player = player;
-
-						StartGame();
+						StartGame(player);
 					})
 				}
 			};
@@ -119,8 +107,16 @@ namespace RMUD3.Server.Components
 			return new MainMenuEnableData(account?.Username ?? "Unknown", News.Items, summaries);
 		}
 
-		private void StartGame()
+		private void StartGame(Player player)
 		{
+			if (ComponentManager == null)
+				throw new Exception("ComponentManager is null!");
+			if (ComponentManager.Session == null)
+				throw new Exception("ComponentManager.Session is null!");
+
+			ComponentManager.Session.Player = player;
+			player.Session = ComponentManager.Session;
+
 			if (ComponentManager != null)
 				ComponentManager.Root = new GamePageComponent(ComponentManager);
 		}

@@ -14,6 +14,7 @@ namespace RMUD3.Server.Components.GamePage
 			Player = Session.Player ?? throw new Exception("Player does not exist, but tried to create GamePageComponent!");
 
 			AddChild(new SidebarComponent(this));
+			AddChild(new LogComponent(this));
 		}
 	}
 }

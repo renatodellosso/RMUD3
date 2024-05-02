@@ -13,6 +13,9 @@ namespace RMUD3.Server.Gameplay
 
 		public DateTime LastPlayed { get; private set; }
 
+		[JsonIgnore]
+		public Session? Session { get; set; }
+
 		public Player(ObjectId accountId, string name) : base()
 		{
 			AccountId = accountId;

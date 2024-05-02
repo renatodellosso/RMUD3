@@ -7,7 +7,6 @@ var ConnectionManager = /** @class */ (function () {
         this.componentManager = componentManager;
         this.connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
         this.connection.on("Action", function (path, action, args) {
-            console.log("Received action ".concat(action, " for component:"), path, "Args:", args);
             _this.componentManager.action(path, action, args);
         });
         this.connection.on("EnableComponent", function (path, type, args) { return _this.componentManager.enableComponent(_this, path, type, args); });

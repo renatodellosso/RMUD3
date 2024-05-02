@@ -537,8 +537,14 @@ video {
 .w-20 {
   width: 5rem;
 }
+.w-80 {
+  width: 20rem;
+}
 .w-\[10\%\] {
   width: 10%;
+}
+.w-\[80\%\] {
+  width: 80%;
 }
 .w-\[90\%\] {
   width: 90%;
@@ -546,14 +552,8 @@ video {
 .w-full {
   width: 100%;
 }
-.w-80 {
-  width: 20rem;
-}
 .w-screen {
   width: 100vw;
-}
-.w-\[80\%\] {
-  width: 80%;
 }
 .flex-row {
   flex-direction: row;

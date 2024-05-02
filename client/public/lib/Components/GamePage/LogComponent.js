@@ -16,26 +16,22 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Component_1 = require("../../Component");
-var GamePageComponent = /** @class */ (function (_super) {
-    __extends(GamePageComponent, _super);
-    function GamePageComponent() {
+var LogComponent = /** @class */ (function (_super) {
+    __extends(LogComponent, _super);
+    function LogComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    GamePageComponent.prototype.enable = function (args) {
-        console.log("Game page enabled");
+    LogComponent.prototype.enable = function (args) {
+        console.log("Log enabled");
         var div = document.createElement("div");
         div.id = this.id;
-        div.className = "w-screen h-screen flex flex-row";
-        document.getElementsByTagName("body")[0].appendChild(div);
-        var mainPane = document.createElement("div");
-        mainPane.id = "main-pane";
-        mainPane.className = "w-[80%] border-r border-white";
-        div.appendChild(mainPane);
+        div.innerText = "Log";
+        div.className = "w-80% border-l border-white p-1";
+        document.getElementById("main-pane").appendChild(div);
     };
-    GamePageComponent.prototype.disable = function () {
-        document.getElementById(this.id).remove();
+    LogComponent.prototype.disable = function () {
     };
-    return GamePageComponent;
+    return LogComponent;
 }(Component_1.default));
-exports.default = GamePageComponent;
-//# sourceMappingURL=GamePageComponent.js.map
+exports.default = LogComponent;
+//# sourceMappingURL=LogComponent.js.map
