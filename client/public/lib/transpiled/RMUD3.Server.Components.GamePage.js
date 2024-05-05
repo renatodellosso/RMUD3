@@ -3,7 +3,12 @@
 /* eslint-disable */
 /* tslint:disable */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SidebarServerAction = exports.SidebarClientAction = void 0;
+exports.SidebarServerAction = exports.SidebarClientAction = exports.LogServerAction = void 0;
+/** Transpiled from RMUD3.Server.Components.GamePage.LogServerAction */
+var LogServerAction;
+(function (LogServerAction) {
+    LogServerAction[LogServerAction["SendMsg"] = 0] = "SendMsg";
+})(LogServerAction || (exports.LogServerAction = LogServerAction = {}));
 /** Transpiled from RMUD3.Server.Components.GamePage.SidebarClientAction */
 var SidebarClientAction;
 (function (SidebarClientAction) {

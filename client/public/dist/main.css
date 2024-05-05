@@ -555,6 +555,9 @@ video {
 .w-screen {
   width: 100vw;
 }
+.flex-1 {
+  flex: 1 1 0%;
+}
 .flex-row {
   flex-direction: row;
 }

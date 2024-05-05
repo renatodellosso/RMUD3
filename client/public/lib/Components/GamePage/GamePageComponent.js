@@ -29,7 +29,7 @@ var GamePageComponent = /** @class */ (function (_super) {
         document.getElementsByTagName("body")[0].appendChild(div);
         var mainPane = document.createElement("div");
         mainPane.id = "main-pane";
-        mainPane.className = "w-[80%] border-r border-white";
+        mainPane.className = "w-[80%] border-r border-white flex flex-col";
         div.appendChild(mainPane);
     };
     GamePageComponent.prototype.disable = function () {

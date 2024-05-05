@@ -105,5 +105,9 @@ namespace RMUD3.Server
 		{
 			children.Add(child.Id, child);
 		}
+
+		public T GetChild<T>(string id) where T : Component => (T)children[id];
+		public Component GetChild(string id) => children[id];
+		public T GetComponent<T>() where T : Component => (T)children.Values.First(c => c is T);
 	}
 }

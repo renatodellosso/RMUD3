@@ -5,15 +5,18 @@ namespace RMUD3.Server.Gameplay
 	public class Exit
 	{
 		public Location From { get; private init; }
+
 		public Location To { get; private init; }
 
-		private bool oneWay;
+		public bool OneWay { get; private init; }
 
-		public Exit(string from, string to, bool oneWay)
+		public Exit(string from, ExitPos fromPos, string to, ExitPos toPos, bool oneWay)
 		{
 			From = Locations.Get(from);
+			From.Exits.Add(fromPos, this);
 			To = Locations.Get(to);
-			this.oneWay = oneWay;
+			To.Exits.Add(toPos, this);
+			OneWay = oneWay;
 		}
 
 		public void Enter(Creature creature)
@@ -23,16 +26,26 @@ namespace RMUD3.Server.Gameplay
 				From.Creatures.Remove(creature);
 				To.Creatures.Add(creature);
 			}
-			else if (!oneWay && creature.LocationId == To.Id)
+			else if (!OneWay && creature.LocationId == To.Id)
 			{
 				To.Creatures.Remove(creature);
 				From.Creatures.Add(creature);
 			}
 			else
 			{
-				throw new System.Exception(
-					$"Creature is not in the correct location to enter exit ({From.Id} => {To.Id}{(oneWay ? " (one way)" : "")}). Current Location: {creature.LocationId}");
+				throw new Exception(
+					$"Creature is not in the correct location to enter exit ({From.Id} => {To.Id}{(OneWay ? " (one way)" : "")}). Current Location: {creature.LocationId}");
 			}
+		}
+
+		public Location GetOtherLocation(Location location)
+		{
+			if (location == From)
+				return To;
+			else if (location == To)
+				return From;
+			else
+				throw new Exception("Location is not part of this exit.");
 		}
 	}
 }

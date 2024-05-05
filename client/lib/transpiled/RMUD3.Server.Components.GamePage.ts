@@ -2,6 +2,11 @@
 /* eslint-disable */
 /* tslint:disable */
 
+/** Transpiled from RMUD3.Server.Components.GamePage.LogServerAction */
+export enum LogServerAction {
+    SendMsg = 0,
+}
+
 /** Transpiled from RMUD3.Server.Components.GamePage.SidebarData */
 export type SidebarData = {
     /** Transpiled from string */

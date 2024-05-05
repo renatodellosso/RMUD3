@@ -1,4 +1,6 @@
-﻿namespace RMUD3.Server.Gameplay
+﻿using System.Collections.Immutable;
+
+namespace RMUD3.Server.Gameplay
 {
 	public class Location
 	{
@@ -9,7 +11,8 @@
 
 		public string Description { get; init; }
 
-		public HashSetWithEvents<Creature> Creatures { get; private init; }
+		private readonly HashSet<Creature> creatures;
+		public ImmutableArray<Creature> Creatures => [.. creatures];
 
 		public Dictionary<ExitPos, Exit> Exits { get; private init; }
 
@@ -18,35 +21,36 @@
 			Name = name;
 			Size = size;
 
-			Creatures = [];
-			Creatures.OnAdd += OnCreatureEnter;
-			Creatures.OnRemove += OnCreatureLeave;
+			creatures = [];
 
 			Exits = [];
 
 			Description = description;
 		}
 
-		public void OnCreatureEnter(Creature creature)
+		public void Enter(Creature creature, Exit? exit)
 		{
+			creatures.Add(creature);
 			creature.LocationId = Id;
+
+			SendMsg($"{creature.Name} enters the room.");
+
+			if (creature is Player player)
+				player.SendMsg(Description);
 		}
 
-		public void OnCreatureLeave(Creature creature)
+		public void Exit(Creature creature, Exit? exit)
 		{
+			creatures.Remove(creature);
+			SendMsg($"{creature.Name} exits the room.");
 		}
 
 		protected void SendMsg(string msg)
 		{
-			foreach (var creature in Creatures)
+			foreach (var creature in creatures)
 			{
 				if (creature is Player player)
-				{
-					if (player.Session == null)
-						continue;
-
-					var componentManager = player.Session?.ComponentManager;
-				}
+					player.SendMsg(msg);
 			}
 		}
 	}

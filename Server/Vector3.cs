@@ -8,8 +8,17 @@ namespace RMUD3.Server
 	[JsonConverter(typeof(Vector3JsonConverter))]
 	public struct Vector3
 	{
+		/// <summary>
+		/// East-West
+		/// </summary>
 		public float X { get; set; }
+		/// <summary>
+		/// North-Souh
+		/// </summary>
 		public float Y { get; set; }
+		/// <summary>
+		/// Down-Up
+		/// </summary>
 		public float Z { get; set; }
 
 		public Vector3(float x, float y, float z)
@@ -30,12 +39,10 @@ namespace RMUD3.Server
 		public override Vector3 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			var content = reader.GetString() ?? throw new JsonException();
-			var parts = content[1..^1].Split(",");
+			var parts = content.Split(",");
 
 			if (parts.Length == 3)
-			{
 				return new Vector3(float.Parse(parts[0]), float.Parse(parts[1]), float.Parse(parts[2]));
-			}
 
 			throw new JsonException();
 		}

@@ -598,6 +598,10 @@ video {
   width: 5rem;
 }
 
+.w-80 {
+  width: 20rem;
+}
+
 .w-\[10\%\] {
   width: 10%;
 }
@@ -618,8 +622,8 @@ video {
   width: 100vw;
 }
 
-.w-80 {
-  width: 20rem;
+.flex-1 {
+  flex: 1 1 0%;
 }
 
 .flex-row {

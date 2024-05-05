@@ -1,4 +1,6 @@
 ﻿using MongoDB.Bson;
+using RMUD3.Server.Components.GamePage;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Tapper;
 
@@ -13,7 +15,7 @@ namespace RMUD3.Server.Gameplay
 
 		public DateTime LastPlayed { get; private set; }
 
-		[JsonIgnore]
+		[JsonIgnore, NotMapped]
 		public Session? Session { get; set; }
 
 		public Player(ObjectId accountId, string name) : base()
@@ -24,6 +26,17 @@ namespace RMUD3.Server.Gameplay
 			LastPlayed = DateTime.Now;
 
 			LocationId = "Start";
+		}
+
+		public void SendMsg(string msg)
+		{
+
+			var componentManager = Session?.ComponentManager;
+			if (componentManager == null) return;
+			if (componentManager.Root == null) return;
+
+			var log = componentManager.Root.GetComponent<LogComponent>();
+			log.SendMsg(msg);
 		}
 	}
 }

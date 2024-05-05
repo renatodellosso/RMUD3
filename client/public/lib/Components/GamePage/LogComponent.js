@@ -16,6 +16,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Component_1 = require("../../Component");
+var RMUD3_Server_Components_GamePage_1 = require("../../transpiled/RMUD3.Server.Components.GamePage");
 var LogComponent = /** @class */ (function (_super) {
     __extends(LogComponent, _super);
     function LogComponent() {
@@ -25,11 +26,20 @@ var LogComponent = /** @class */ (function (_super) {
         console.log("Log enabled");
         var div = document.createElement("div");
         div.id = this.id;
-        div.innerText = "Log";
-        div.className = "w-80% border-l border-white p-1";
+        div.className = "w-80% border-white p-1 flex-1";
         document.getElementById("main-pane").appendChild(div);
     };
     LogComponent.prototype.disable = function () {
+    };
+    LogComponent.prototype.handleServerAction = function (action, args) {
+        switch (action) {
+            case RMUD3_Server_Components_GamePage_1.LogServerAction.SendMsg:
+                var div = document.createElement("div");
+                div.className = "text-white";
+                div.innerText = args;
+                document.getElementById(this.id).appendChild(div);
+                break;
+        }
     };
     return LogComponent;
 }(Component_1.default));

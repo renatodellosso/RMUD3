@@ -119,6 +119,8 @@ namespace RMUD3.Server.Components
 
 			if (ComponentManager != null)
 				ComponentManager.Root = new GamePageComponent(ComponentManager);
+
+			player.Location?.Enter(player, null);
 		}
 	}
 }

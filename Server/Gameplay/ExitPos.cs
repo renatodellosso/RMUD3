@@ -1,4 +1,7 @@
-﻿namespace RMUD3.Server.Gameplay
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace RMUD3.Server.Gameplay
 {
 	public enum Side
 	{
@@ -10,5 +13,35 @@
 		Down
 	}
 
-	public record ExitPos(Side Side, int Pos);
+	[JsonConverter(typeof(ExitPosJsonConverter))]
+	public record ExitPos(Side Side, Vector2 Pos);
+
+	public class ExitPosJsonConverter : JsonConverter<ExitPos>
+	{
+		public override ExitPos? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		{
+			var content = reader.GetString() ?? throw new JsonException();
+
+			var side = content[0] switch
+			{
+				'N' => Side.North,
+				'E' => Side.East,
+				'S' => Side.South,
+				'W' => Side.West,
+				'U' => Side.Up,
+				'D' => Side.Down,
+				_ => throw new JsonException("Invalid Side. Side: " + content[0])
+			};
+
+			var pos = JsonSerializer.Deserialize<Vector2>(content[1..]);
+
+			return new ExitPos(side, pos);
+		}
+
+		public override void Write(Utf8JsonWriter writer, ExitPos value, JsonSerializerOptions options)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
 }
