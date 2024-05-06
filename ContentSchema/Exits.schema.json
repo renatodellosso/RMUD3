@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Exits",
+
+  "type": "array",
+
+  "items": {
+    "type": "object",
+    "properties": {
+      "from": {
+        "type": "string"
+      },
+      "fromPos": {
+        "type": "string"
+      },
+      "to": {
+        "type": "string"
+      },
+      "toPos": {
+        "type": "string"
+      },
+      "oneWay": {
+        "type": "boolean"
+      }
+    },
+    "required": [ "from", "fromPos", "to", "toPos" ]
+  }
+}

@@ -12,6 +12,14 @@ export type NewsItem = {
     content: string;
 }
 
+/** Transpiled from RMUD3.Server.Vector2 */
+export type Vector2 = {
+    /** Transpiled from float */
+    x: number;
+    /** Transpiled from float */
+    y: number;
+}
+
 /** Transpiled from RMUD3.Server.Vector3 */
 export type Vector3 = {
     /** Transpiled from float */

@@ -1,4 +1,5 @@
 ﻿using RMUD3.Server.Content.Lists;
+using System.Text.Json.Serialization;
 
 namespace RMUD3.Server.Gameplay
 {
@@ -10,7 +11,8 @@ namespace RMUD3.Server.Gameplay
 
 		public bool OneWay { get; private init; }
 
-		public Exit(string from, ExitPos fromPos, string to, ExitPos toPos, bool oneWay)
+		[JsonConstructor]
+		public Exit(string from, ExitPos fromPos, string to, ExitPos toPos, bool oneWay = false)
 		{
 			From = Locations.Get(from);
 			From.Exits.Add(fromPos, this);

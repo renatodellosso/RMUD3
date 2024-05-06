@@ -1,16 +1,10 @@
 ﻿namespace RMUD3.Server.Gameplay
 {
-	public class ExitSet
+	public class ExitSet(Location location)
 	{
-		private readonly Location location;
+		private readonly Location location = location;
 
-		private readonly Dictionary<ExitPos, Exit> exits;
-
-		public ExitSet(Location location)
-		{
-			this.location = location;
-			exits = [];
-		}
+		private readonly Dictionary<ExitPos, Exit> exits = [];
 
 		public void Add(ExitPos pos, Exit exit)
 		{

@@ -14,7 +14,7 @@ namespace RMUD3.Server.Gameplay
 		private readonly HashSet<Creature> creatures;
 		public ImmutableArray<Creature> Creatures => [.. creatures];
 
-		public Dictionary<ExitPos, Exit> Exits { get; private init; }
+		public ExitSet Exits { get; private init; }
 
 		public Location(string name, Vector3 size, string description)
 		{
@@ -23,7 +23,7 @@ namespace RMUD3.Server.Gameplay
 
 			creatures = [];
 
-			Exits = [];
+			Exits = new(this);
 
 			Description = description;
 		}

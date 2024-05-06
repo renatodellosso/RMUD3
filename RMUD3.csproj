@@ -42,7 +42,7 @@
   </Target>
 
   <ProjectExtensions>
-    <VisualStudio><UserProperties content_4news_4test_1news_1json__JsonSchema="../../ContentSchema/News.schema.json" /></VisualStudio>
+    <VisualStudio><UserProperties content_4exits_1exits_1json__JsonSchema="..\..\ContentSchema\Exits.schema.json" content_4news_4test_1news_1json__JsonSchema="../../ContentSchema/News.schema.json" /></VisualStudio>
   </ProjectExtensions>
 
 </Project>
