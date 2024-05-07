@@ -11,7 +11,7 @@ public class Program
 
 	public static void Main(string[] args)
 	{
-		Content.Content.Load().Wait();
+		Content.ContentLoader.Load().Wait();
 
 #if !VERIFY
 		if (args.Contains("--verify-content") || args.Contains("-vc"))

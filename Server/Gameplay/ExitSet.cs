@@ -12,22 +12,28 @@
 				throw new Exception($"Exit already exists at position {pos}.");
 
 			// Parse exit side to determine range for pos
-			var range = pos.Side switch
-			{
-				Side.North => new Vector2(location.Size.X, location.Size.Z),
-				Side.East => new Vector2(location.Size.Z, location.Size.Y),
-				Side.South => new Vector2(location.Size.X, location.Size.Z),
-				Side.West => new Vector2(location.Size.Z, location.Size.Y),
-				Side.Up => new Vector2(location.Size.X, location.Size.Y),
-				Side.Down => new Vector2(location.Size.X, location.Size.Y),
-				_ => throw new Exception("Invalid side.")
-			};
+			var range = SideToPos(location.Size, pos.Side);
 
 			// Check if pos is within range
-			if (pos.Pos.X < 0 || pos.Pos.X >= range.X || pos.Pos.Y < 0 || pos.Pos.Y >= range.Y)
-				throw new Exception($"Exit position {pos} is out of range for side {pos.Side}.");
+			var posOnSide = new Vector2(pos.Pos.X, pos.Pos.Y);
+			if (posOnSide.X < 0 || posOnSide.X >= range.X || posOnSide.Y < 0 || posOnSide.Y >= range.Y)
+				throw new Exception($"Exit position {posOnSide} is out of range for side {pos.Side}. Range: {range}");
 
 			exits.Add(pos, exit);
+		}
+
+		private static Vector2 SideToPos(Vector3 pos, Side side)
+		{
+			return side switch
+			{
+				Side.North => new Vector2(pos.X, pos.Z),
+				Side.East => new Vector2(pos.Z, pos.Y),
+				Side.South => new Vector2(pos.X, pos.Z),
+				Side.West => new Vector2(pos.Z, pos.Y),
+				Side.Up => new Vector2(pos.X, pos.Y),
+				Side.Down => new Vector2(pos.X, pos.Y),
+				_ => throw new Exception("Invalid side: " + side)
+			};
 		}
 	}
 }

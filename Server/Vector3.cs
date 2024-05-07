@@ -28,7 +28,7 @@ namespace RMUD3.Server
 			Z = z;
 		}
 
-		public override string ToString()
+		public override readonly string ToString()
 		{
 			return $"<{X}, {Y}, {Z}>";
 		}
@@ -38,11 +38,11 @@ namespace RMUD3.Server
 	{
 		public override Vector3 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
-			var content = reader.GetString() ?? throw new JsonException();
+			var content = reader.GetString() ?? throw new JsonException("Encountered an error reading");
 			var parts = content.Split(",");
 
 			if (parts.Length == 3)
-				return new Vector3(float.Parse(parts[0]), float.Parse(parts[1]), float.Parse(parts[2]));
+				return new Vector3(float.Parse(parts[0].Trim()), float.Parse(parts[1].Trim()), float.Parse(parts[2].Trim()));
 
 			throw new JsonException();
 		}

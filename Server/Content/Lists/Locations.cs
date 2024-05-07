@@ -13,14 +13,14 @@ namespace RMUD3.Server.Content.Lists
 			locations = [];
 		}
 
-		public static Location Get(string name)
+		public static Location Get(string id)
 		{
 			instance ??= new Locations();
 
-			if (instance.locations.TryGetValue(name, out Location? value))
+			if (instance.locations.TryGetValue(id, out Location? value))
 				return value;
 
-			throw new KeyNotFoundException();
+			throw new KeyNotFoundException("Location not found: " + id);
 		}
 
 		public static void Add(Location location)

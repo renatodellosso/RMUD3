@@ -6,6 +6,10 @@
 
 		private List<ContentFile> files;
 
+		public bool Loaded { get; private set; }
+
+		public virtual Type[] Dependencies => [];
+
 		public ContentType()
 		{
 			files = [];
@@ -32,6 +36,8 @@
 				}
 			}
 			AfterLoad();
+
+			Loaded = true;
 		}
 
 		/// <summary>

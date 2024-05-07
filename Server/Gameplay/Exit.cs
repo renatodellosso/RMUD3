@@ -6,8 +6,10 @@ namespace RMUD3.Server.Gameplay
 	public class Exit
 	{
 		public Location From { get; private init; }
+		private ExitPos fromPos;
 
 		public Location To { get; private init; }
+		private ExitPos toPos;
 
 		public bool OneWay { get; private init; }
 
@@ -15,10 +17,19 @@ namespace RMUD3.Server.Gameplay
 		public Exit(string from, ExitPos fromPos, string to, ExitPos toPos, bool oneWay = false)
 		{
 			From = Locations.Get(from);
-			From.Exits.Add(fromPos, this);
+			this.fromPos = fromPos;
 			To = Locations.Get(to);
-			To.Exits.Add(toPos, this);
+			this.toPos = toPos;
 			OneWay = oneWay;
+		}
+
+		/// <summary>
+		/// Adds the exit to the locations' exits lists.
+		/// </summary>
+		public void Init()
+		{
+			From.Exits.Add(fromPos, this);
+			To.Exits.Add(toPos, this);
 		}
 
 		public void Enter(Creature creature)

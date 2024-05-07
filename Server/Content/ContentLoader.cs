@@ -2,16 +2,18 @@
 
 namespace RMUD3.Server.Content
 {
-	public class Content
+	public class ContentLoader
 	{
 
-		private static Content? instance;
+		private static ContentLoader? instance;
 
-		private readonly Dictionary<string, ContentType> contentTypes;
+		private readonly Dictionary<string, ContentType> contentTypesByFileExtension;
+		private readonly Dictionary<Type, ContentType> contentTypesByType;
 
-		private Content()
+		private ContentLoader()
 		{
-			contentTypes = [];
+			contentTypesByFileExtension = [];
+			contentTypesByType = [];
 		}
 
 		public static async Task Load()
@@ -38,18 +40,50 @@ namespace RMUD3.Server.Content
 				var contentType = (ContentType?)Activator.CreateInstance(type) ?? throw new Exception($"Failed to create instance of ContentType: {type.Name}");
 
 				// Add the instance to the contentTypes dictionary
-				this.contentTypes.Add(contentType.TypeName, contentType);
+				contentTypesByFileExtension.Add(contentType.TypeName, contentType);
+				contentTypesByType.Add(type, contentType);
 			}
 		}
 
 		private async Task LoadInstance()
 		{
-			Console.WriteLine("Loading content...");
-
 			MapContentTypes();
 			FindContentFiles();
 
-			foreach (ContentType contentType in contentTypes.Values)
+			LinkedList<ContentType> contentTypes = new();
+
+			// Order content types by dependencies
+			foreach (ContentType contentType in contentTypesByFileExtension.Values)
+				contentTypes.AddLast(contentType);
+
+			// For each content type, move it after its dependencies
+			Console.WriteLine("Ordering content types by dependencies...");
+			foreach (ContentType contentType in contentTypesByFileExtension.Values)
+			{
+				var dependencies = contentType.Dependencies.ToList();
+
+				for (LinkedListNode<ContentType>? node = contentTypes.First; node != null; node = node.Next)
+				{
+					if (node.Value == contentType)
+						continue;
+
+					if (dependencies.Contains(node.Value.GetType()))
+						dependencies.Remove(node.Value.GetType());
+
+					if (dependencies.Count == 0)
+					{
+						contentTypes.Remove(contentType);
+						if (contentType.Dependencies.Length == 0)
+							contentTypes.AddFirst(contentType);
+						else
+							contentTypes.AddAfter(node, contentType);
+						break;
+					}
+				}
+			}
+
+			Console.WriteLine("Loading content...");
+			foreach (ContentType contentType in contentTypes)
 				contentType.Load();
 
 			Console.WriteLine("Content loaded");
@@ -65,7 +99,7 @@ namespace RMUD3.Server.Content
 				try
 				{
 					ContentFile file = new(filePath);
-					contentTypes.TryGetValue(file.Type, out ContentType? contentType);
+					contentTypesByFileExtension.TryGetValue(file.Type, out ContentType? contentType);
 					if (contentType == null)
 						throw new Exception($"No content type found for file: {file.Name}.{file.Type}");
 

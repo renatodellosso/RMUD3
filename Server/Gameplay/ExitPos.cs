@@ -14,7 +14,7 @@ namespace RMUD3.Server.Gameplay
 	}
 
 	[JsonConverter(typeof(ExitPosJsonConverter))]
-	public record ExitPos(Side Side, Vector2 Pos);
+	public record ExitPos(Side Side, Vector3 Pos);
 
 	public class ExitPosJsonConverter : JsonConverter<ExitPos>
 	{
@@ -33,7 +33,8 @@ namespace RMUD3.Server.Gameplay
 				_ => throw new JsonException("Invalid Side. Side: " + content[0])
 			};
 
-			var pos = JsonSerializer.Deserialize<Vector2>(content[1..]);
+			// We have to add back " " to the content to make it a valid json string
+			var pos = JsonSerializer.Deserialize<Vector3>($"\"{content[1..]}\"");
 
 			return new ExitPos(side, pos);
 		}
