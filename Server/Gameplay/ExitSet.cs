@@ -26,10 +26,10 @@
 		{
 			return side switch
 			{
-				Side.North => new Vector2(pos.X, pos.Z),
-				Side.East => new Vector2(pos.Z, pos.Y),
-				Side.South => new Vector2(pos.X, pos.Z),
-				Side.West => new Vector2(pos.Z, pos.Y),
+				Side.North => new Vector2(pos.X, 1),
+				Side.East => new Vector2(pos.Y, 1),
+				Side.South => new Vector2(pos.X, 1),
+				Side.West => new Vector2(pos.Y, 1),
 				Side.Up => new Vector2(pos.X, pos.Y),
 				Side.Down => new Vector2(pos.X, pos.Y),
 				_ => throw new Exception("Invalid side: " + side)

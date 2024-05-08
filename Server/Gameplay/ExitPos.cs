@@ -14,7 +14,7 @@ namespace RMUD3.Server.Gameplay
 	}
 
 	[JsonConverter(typeof(ExitPosJsonConverter))]
-	public record ExitPos(Side Side, Vector3 Pos);
+	public record ExitPos(Side Side, Vector2 Pos);
 
 	public class ExitPosJsonConverter : JsonConverter<ExitPos>
 	{
@@ -34,7 +34,8 @@ namespace RMUD3.Server.Gameplay
 			};
 
 			// We have to add back " " to the content to make it a valid json string
-			var pos = JsonSerializer.Deserialize<Vector3>($"\"{content[1..]}\"");
+			var posStr = content[1..];
+			var pos = "UD".Contains(content[0]) ? JsonSerializer.Deserialize<Vector2>($"\"{content[1..]}\"") : new(int.Parse(posStr), 0);
 
 			return new ExitPos(side, pos);
 		}

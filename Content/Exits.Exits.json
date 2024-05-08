@@ -1,8 +1,8 @@
 [
   {
     "to": "Start",
-    "toPos": "E0,0,0",
+    "toPos": "E0",
     "from": "Start",
-    "fromPos": "E1,1,1"
+    "fromPos": "U1,1"
   }
 ]
